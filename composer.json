@@ -1,0 +1,21 @@
+{
+  "name": "metin2cms/metin2cms",
+  "description": "todo",
+  "minimum-stability": "stable",
+  "license": "GPL v3",
+  "authors": [
+    {
+      "name": "DevChuckNorris",
+      "email": "chuck@metin2dev.org"
+    }, {
+      "name": ".PolluX",
+      "email": "webmaster@darksecret2.com"
+    }
+  ],
+  "require": {
+    "smarty/smarty": "3.1.x-dev"
+  },
+  "autoload": {
+    "psr-4": { "Quantum\\": "system/" }
+  }
+}
