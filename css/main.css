@@ -49,6 +49,31 @@ body
 #box #footer_copyright{
     text-align: center;
 }
+
+#box #404_wrapper{
+
+}
+#box #404_wrapper #404_head h3{
+    font-size: 1.17em;
+    margin-before: 1em;
+    margin-after: 1em;
+    margin-start: 0;
+    margin-end: 0;
+    font-weight: bold;
+}
+#box #404_wrapper #404_content{
+    position: relative;
+}
+#box #404_wrapper #404_content p{
+    position: absolute;
+    font-size: larger;
+    top: 50px;
+    left: 0;
+    width: 100%;
+}
+#box #404_wrapper #404_content #404_img{
+    position: absolute;
+}
 #admin_box
 {
     background: #FFF3E0;
