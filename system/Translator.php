@@ -42,6 +42,26 @@ class Translator {
             $this->database->getEntityManager()->flush();
         }
 
-        return $translation->getTranslated();
+        return $this->fixUmlaut($translation->getTranslated());
+    }
+
+    /**
+     * @param $string string
+     * @return string
+     */
+    private function fixUmlaut($string) {
+        $replaces = array(
+            'ä' => '&auml;',
+            'ö' => '&ouml;',
+            'ü' => '&uuml;',
+            'ß' => '&szlig;',
+            'Ä' => '&Auml;',
+            'Ö' => '&Ouml;',
+            'Ü' => '&Uuml;',
+        );
+        foreach($replaces as $search => $replace) {
+            $string = str_replace($search, $replace, $string);
+        }
+        return $string;
     }
 }

@@ -61,6 +61,7 @@ class Core {
         $this->smarty->assign('system_slogan', 'Quantum CMS <3');
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);
+        $this->smarty->assign('system_currentUser', null);
 
         // Read query param
         $query = array_key_exists('q', $_GET) ? $_GET['q'] : '';
@@ -71,6 +72,11 @@ class Core {
         }
 
         $pageFullName = "\\Quantum\\Pages\\" . $page;
+        if(!class_exists($pageFullName)) {
+            $this->smarty->assign('pageTemplate', '404.tpl');
+            $this->smarty->display('index.tpl');
+            return;
+        }
         /** @var $pageClass IPage */
         $pageClass = new $pageFullName();
         if(!($pageClass instanceof IPage)) {
