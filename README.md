@@ -9,7 +9,7 @@ Quantum-CMS a powerful free and open source cms for Metin2 private servers.
 - Theme System
 - Caching System
 - Advanced statistics
-(advanced feature list in todo.md)
+- (advanced feature list in todo.md)
 
 ### How to install
 Quantum-CMS use composer for dependency management so if you clone this repository
