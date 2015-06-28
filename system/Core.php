@@ -57,7 +57,7 @@ class Core {
         // Only for development:
         $this->internalDatabase->createStructure();
 
-        $this->smarty->assign('system_pageTitle', 'Quantum Team');
+        $this->smarty->assign('system_pageTitle', 'Team Quantum');
         $this->smarty->assign('system_slogan', 'Quantum CMS <3');
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);

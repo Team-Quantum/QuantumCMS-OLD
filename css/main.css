@@ -46,6 +46,9 @@ body
     webkit-border-radius: 3px;
     webkit-box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
+#box #footer_copyright{
+    text-align: center;
+}
 #admin_box
 {
     background: #FFF3E0;
