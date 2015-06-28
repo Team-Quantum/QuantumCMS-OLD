@@ -19,6 +19,7 @@ if(!array_key_exists('type', $_GET)) {
                     // Step 2: Import
                     echo 'Import ' . $entry . '<br />';
                     $lang = explode('.', $entry)[0];
+                    $lang = strtoupper($lang);
                     $keys = parse_ini_file($dir . $entry);
                     foreach($keys as $key => $translated) {
                         $translation = $translationsRepo->findOneBy(

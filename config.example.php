@@ -3,6 +3,9 @@
 // The URL under which the main site is accessible with trailing slash
 $settings['external_path'] = 'http://localhost/';
 
+$settings['recaptcha']['public'] = '';
+$settings['recaptcha']['private'] = '';
+
 // Database configuration for internal data (failed login log, itemshop, etc)
 $settings['internal_database']['type'] = 'sqlite';              # Also possible mysql (see example for server database)
 $settings['internal_database']['path'] = 'main.sqlite';         # Can be placed somewhere on the web server (protected directory)
