@@ -17,6 +17,9 @@
     "doctrine/orm": "2.6.x-dev"
   },
   "autoload": {
-    "psr-4": { "Quantum\\": "system/" }
+    "psr-4": {
+      "Quantum\\": "system/",
+      "Quantum\\Pages\\": "system/pages/"
+    }
   }
 }

@@ -56,7 +56,8 @@ class DatabaseManager {
     public function createStructure() {
         $tool = new SchemaTool($this->entityManager);
         $classes = array(
-            $this->entityManager->getClassMetadata('Quantum\DBO\CoreStatus')
+            $this->entityManager->getClassMetadata('Quantum\DBO\CoreStatus'),
+            $this->entityManager->getClassMetadata('Quantum\DBO\Translation')
         );
         $tool->updateSchema($classes);
     }

@@ -22,8 +22,7 @@
 
             <div id="box">
                 {* Page Content *}
-                Accounts: {$accounts}
-                Characters: {$players}
+                {include file=$pageTemplate}
             </div>
 
             {* Copyright Box

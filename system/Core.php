@@ -2,6 +2,8 @@
 
 namespace Quantum;
 
+use Quantum\pages\IPage;
+
 class Core {
 
     /**
@@ -25,6 +27,11 @@ class Core {
     private $serverDatabase;
 
     /**
+     * @var Translator
+     */
+    private $translator;
+
+    /**
      * @var Core
      */
     private static $instance;
@@ -38,6 +45,7 @@ class Core {
         $this->initSmarty();
         $this->initConfiguration();
         $this->initDatabases();
+        $this->initTranslator();
 
         Core::$instance = $this;
     }
@@ -49,24 +57,39 @@ class Core {
         // Only for development:
         $this->internalDatabase->createStructure();
 
-        /** @var $database DatabaseManager */
-
-        /** @var $database account */
-        $database = $this->serverDatabase['account'];
-        $size_acc = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Account')->findAll());
-
-        /** @var $database player */
-        $database = $this->serverDatabase['player'];
-        $size_pl = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Player')->findAll());
-
         $this->smarty->assign('system_pageTitle', 'Quantum Team');
         $this->smarty->assign('system_slogan', 'Quantum CMS <3');
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);
-        $this->smarty->assign('accounts', $size_acc);
-        $this->smarty->assign('players', $size_pl);
+
+        // Read query param
+        $query = array_key_exists('q', $_GET) ? $_GET['q'] : '';
+        $path = explode('/', $query);
+        $page = 'Home';
+        if(strlen($query) > 0) {
+            $page = $path[0];
+        }
+
+        $pageFullName = "\\Quantum\\Pages\\" . $page;
+        /** @var $pageClass IPage */
+        $pageClass = new $pageFullName();
+        if(!($pageClass instanceof IPage)) {
+            throw new \Exception("Page '" . $pageFullName . "' is invalid.'");
+        }
+
+        $pageClass->preRender($this, $this->smarty);
+        $this->smarty->assign('pageTemplate', $pageClass->getTemplate($this, $this->smarty));
 
         $this->smarty->display('index.tpl');
+
+        $pageClass->postRender($this, $this->smarty);
+    }
+
+    /**
+     * @return Translator
+     */
+    public function getTranslator() {
+        return $this->translator;
     }
 
     public static function getInstance() {
@@ -94,6 +117,10 @@ class Core {
         $this->smarty = new \Smarty();
         $this->smarty->setTemplateDir('templates');
         $this->smarty->setCompileDir('templates/compiled');
+
+        $pluginDirectories = $this->smarty->getPluginsDir();
+        $pluginDirectories[] = SYSTEM_DIR . 'smarty';
+        $this->smarty->setPluginsDir($pluginDirectories);
     }
 
     /**
@@ -117,6 +144,27 @@ class Core {
 
     private function initExceptionHandler() {
         new ExceptionHandler();
+    }
+
+    private function initTranslator() {
+        $this->translator = new Translator('DE', $this->internalDatabase);
+    }
+
+    /**
+     * Returns the database manager for the database given
+     * @param $type string Database type (player, account, log)
+     * @return DatabaseManager
+     */
+    public function getServerDatabase($type) {
+        return $this->serverDatabase[$type];
+    }
+
+    /**
+     * @return DatabaseManager
+     */
+    public function getInternalDatabase()
+    {
+        return $this->internalDatabase;
     }
 
 }
