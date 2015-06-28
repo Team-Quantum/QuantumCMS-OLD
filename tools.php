@@ -6,7 +6,8 @@ $core = new \Quantum\Core();
 
 if(!array_key_exists('type', $_GET)) {
     echo '<a href="tools.php?type=import">Import languages</a><br />';
-    echo '<a href="tools.php?type=export">Export languages</a>';
+    echo '<a href="tools.php?type=export">Export languages</a><br />';
+    echo '<a href="tools.php?type=exampleData">Generate Example Data</a><br />';
 } else {
     if($_GET['type'] == 'import') {
         // Step 1: Read all files in install/languages
@@ -57,5 +58,17 @@ if(!array_key_exists('type', $_GET)) {
         }
 
         echo 'Done';
+    } else if($_GET['type'] == 'exampleData') {
+        $coreStatuses = array();
+        $coreStatuses[] = new \Quantum\DBO\CoreStatus("MySQL", '127.0.0.1', 3306, false, time());
+        for($i = 1; $i <= 8; $i++) {
+            $coreStatuses[] = new \Quantum\DBO\CoreStatus("Channel " . $i, '127.0.0.1', 79 + $i, false, time());
+        }
+
+        $internal = $core->getInternalDatabase()->getEntityManager();
+        foreach($coreStatuses as $coreStatus) {
+            $internal->persist($coreStatus);
+        }
+        $internal->flush();
     }
 }
