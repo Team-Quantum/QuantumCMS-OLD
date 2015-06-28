@@ -49,10 +49,15 @@ class Core {
         // Only for development:
         $this->internalDatabase->createStructure();
 
+        /** @var $database DatabaseManager */
+        $database = $this->serverDatabase['account'];
+        $size = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Account')->findAll());
+
         $this->smarty->assign('system_pageTitle', 'Test');
         $this->smarty->assign('system_slogan', 'No Slogan');
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);
+        $this->smarty->assign('accounts', $size);
 
         $this->smarty->display('index.tpl');
     }
@@ -93,7 +98,12 @@ class Core {
     }
 
     private function initDatabases() {
-        $this->internalDatabase = new DatabaseManager($this->settings['internal_database'], ROOT_DIR . 'mappings' . DS . 'internal' . DS);
+        $this->internalDatabase = new DatabaseManager($this->settings['internal_database'],
+            ROOT_DIR . 'mappings' . DS . 'internal' . DS);
+
+        $this->serverDatabase = array();
+        $this->serverDatabase['account'] = new DatabaseManager($this->settings['server_database']['account'],
+            ROOT_DIR . 'mappings' . DS . 'account' . DS);
     }
 
     private function initExceptionHandler() {

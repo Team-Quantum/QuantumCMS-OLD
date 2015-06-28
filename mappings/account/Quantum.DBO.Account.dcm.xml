@@ -1,0 +1,25 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Quantum\DBO\Account" table="account">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="login" type="string" />
+        <field name="password" type="string" />
+        <field name="real_name" type="string" />
+        <field name="social_id" type="string" />
+        <field name="email" type="string" />
+        <field name="create_time" type="datetime" />
+        <field name="question1" type="string" />
+        <field name="answer1" type="string" />
+        <field name="question2" type="string" />
+        <field name="answer2" type="string" />
+        <field name="status" type="string" />
+        <field name="availDt" type="datetime" />
+    </entity>
+
+</doctrine-mapping>

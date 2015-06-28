@@ -60,4 +60,11 @@ class DatabaseManager {
         );
         $tool->updateSchema($classes);
     }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager() {
+        return $this->entityManager;
+    }
 }
