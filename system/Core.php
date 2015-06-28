@@ -50,14 +50,21 @@ class Core {
         $this->internalDatabase->createStructure();
 
         /** @var $database DatabaseManager */
-        $database = $this->serverDatabase['account'];
-        $size = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Account')->findAll());
 
-        $this->smarty->assign('system_pageTitle', 'Test');
-        $this->smarty->assign('system_slogan', 'No Slogan');
+        /** @var $database account */
+        $database = $this->serverDatabase['account'];
+        $size_acc = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Account')->findAll());
+
+        /** @var $database player */
+        $database = $this->serverDatabase['player'];
+        $size_pl = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Player')->findAll());
+
+        $this->smarty->assign('system_pageTitle', 'Quantum Team');
+        $this->smarty->assign('system_slogan', 'Quantum CMS <3');
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);
-        $this->smarty->assign('accounts', $size);
+        $this->smarty->assign('accounts', $size_acc);
+        $this->smarty->assign('players', $size_pl);
 
         $this->smarty->display('index.tpl');
     }
@@ -104,6 +111,8 @@ class Core {
         $this->serverDatabase = array();
         $this->serverDatabase['account'] = new DatabaseManager($this->settings['server_database']['account'],
             ROOT_DIR . 'mappings' . DS . 'account' . DS);
+        $this->serverDatabase['player'] = new DatabaseManager($this->settings['server_database']['player'],
+            ROOT_DIR . 'mappings' . DS . 'player' . DS);
     }
 
     private function initExceptionHandler() {

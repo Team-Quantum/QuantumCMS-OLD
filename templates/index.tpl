@@ -23,6 +23,7 @@
             <div id="box">
                 {* Page Content *}
                 Accounts: {$accounts}
+                Characters: {$players}
             </div>
 
             {* Copyright Box
