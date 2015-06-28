@@ -305,7 +305,7 @@ hr
     text-align: center;
     width: 100%;
 }
-input[type=text],input[type=password],textarea,select
+input[type=text],input[type=password],input[type=email],textarea,select
 {
     background-color: #f4f4f4;
     border: 1px solid #bfbfbf;
