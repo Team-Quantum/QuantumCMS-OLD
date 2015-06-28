@@ -20,7 +20,7 @@
 
 ### Installation System/Page
   - "Easy to use"
-  
+
 ### Language System
   - Supported Languages at the moment
     - DE

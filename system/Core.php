@@ -168,9 +168,51 @@ class Core {
     /**
      * @return DatabaseManager
      */
-    public function getInternalDatabase()
-    {
+    public function getInternalDatabase() {
         return $this->internalDatabase;
+    }
+
+    /**
+     * Generates html code which display recaptcha
+     * @return string
+     */
+    public function getRecaptchaHtml() {
+        return '<script src="https://www.google.com/recaptcha/api.js"></script>' .
+                '<div class="g-recaptcha" data-sitekey="' . $this->settings['recaptcha']['public'] . '"></div>';
+    }
+
+    /**
+     * Check if the captcha was solved
+     * @return boolean
+     */
+    public function validateCaptcha() {
+        $recaptchURL = 'https://www.google.com/recaptcha/api/siteverify';
+        $secret = $this->settings['recaptcha']['private'];
+        $data = array(
+            'secret' => $secret,
+            'response' => $_POST['g-recaptcha-response'],
+            'remoteip' => $_SERVER['REMOTE_ADDR']
+        );
+        $request = array(
+            'http' => array(
+                'header' => 'Content-type: application/x-www-form-urlencoded\r\n',
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        $context = stream_context_create($request);
+        $result = file_get_contents($recaptchURL, false, $context);
+        $json = json_decode($result);
+        return $json->{'success'} == 1;
+    }
+
+    public function addError($message) {
+        $errors = $this->smarty->getTemplateVars('errors');
+        if($errors === null) {
+            $errors = array();
+        }
+        $errors[] = $this->translator->translate($message);
+        $this->smarty->assign('errors', $errors);
     }
 
 }
