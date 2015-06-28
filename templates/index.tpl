@@ -30,9 +30,7 @@
                of Team-Quantum.
             *}
             <div id="box">
-                <div id="footer_copyright"
-                    {include file="copyright.tpl"}
-                </div>
+                {include file="copyright.tpl"}
             </div>
         </div>
         <div id="right">
