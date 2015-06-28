@@ -29,7 +29,11 @@
                Please note that's allowed to add your copyright but it's forbidden to remove the copy right
                of Team-Quantum.
             *}
-            {include file="copyright.tpl"}
+            <div id="box">
+                <div id="footer_copyright"
+                    {include file="copyright.tpl"}
+                </div>
+            </div>
         </div>
         <div id="right">
 
