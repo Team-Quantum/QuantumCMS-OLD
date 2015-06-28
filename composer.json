@@ -13,7 +13,8 @@
     }
   ],
   "require": {
-    "smarty/smarty": "3.1.x-dev"
+    "smarty/smarty": "3.1.x-dev",
+    "doctrine/orm": "2.6.x-dev"
   },
   "autoload": {
     "psr-4": { "Quantum\\": "system/" }
