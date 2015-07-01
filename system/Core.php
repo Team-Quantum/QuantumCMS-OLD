@@ -52,6 +52,7 @@ class Core {
         $this->initConfiguration();
         $this->initDatabases();
         $this->initTranslator();
+        $this->initPlugins();
 
         Core::$instance = $this;
     }
@@ -77,8 +78,6 @@ class Core {
         $page = 'Home';
         if(strlen($query) > 0) {
             $page = $path[0];
-            $category = $path[1];
-            $item = $path[2];
         }
 
         $pageFullName = "\\Quantum\\Pages\\" . $page;
@@ -95,6 +94,9 @@ class Core {
 
         $pageClass->preRender($this, $this->smarty);
         $this->smarty->assign('pageTemplate', $pageClass->getTemplate($this, $this->smarty));
+
+        // Process sidebars
+        PluginManager::processSidebars($this, $this->smarty);
 
         $this->smarty->display('index.tpl');
 
@@ -284,6 +286,10 @@ class Core {
         ));
 
         return $this->currentAccount;
+    }
+
+    private function initPlugins() {
+        PluginManager::load($this);
     }
 
 }

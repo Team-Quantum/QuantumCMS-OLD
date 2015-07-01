@@ -1,0 +1,8 @@
+{
+  "name": "Quantum Stats",
+  "version": "1.0",
+  "namespace": "Quantum\\Plugins\\Stats",
+  "load": [
+    "StatsPlugin"
+  ]
+}

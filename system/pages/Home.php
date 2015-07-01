@@ -14,14 +14,7 @@ class Home implements IPage {
      */
     public function preRender($core, $smarty)
     {
-        $database = $core->getServerDatabase('account');
-        $size_acc = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Account')->findAll());
 
-        $database = $core->getServerDatabase('player');
-        $size_pl = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Player')->findAll());
-
-        $smarty->assign('accounts', $size_acc);
-        $smarty->assign('players', $size_pl);
     }
 
     /**

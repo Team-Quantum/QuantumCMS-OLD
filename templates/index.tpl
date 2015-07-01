@@ -58,14 +58,9 @@
                     Welcome! {$system_pageTitle} is a FREE-to-play massive online world packed with intense action and brutal fighting.
                 </div>
             </div>
-            <div id="box">
-                {include file="pages/includes/status.tpl"}
-            </div>
-            <div id="box"></div>
-            <div id="box"></div>
-            <div id="box"></div>
-            <div id="box"></div>
-            <div id="box"></div>
+            {foreach from=$system_sidebar_right item=tpl}
+                <div id="box">{include file=$tpl}</div>
+            {/foreach}
         </div>
     </div>
 </body>
