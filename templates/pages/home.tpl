@@ -9,9 +9,3 @@
     Viel Spa&szlig; mit diese CMS w&uuml;nschen:<br/>
     DevChuckNorris & .PolluX [Team Quantum]
 </div>
-<div class="info">
-    {$news_wbb->getContent()}
-    {if $news_wbb->isHasReadMore()}
-        <a href="{$news_wbb->getReadMore()}">Read more</a>
-    {/if}
-</div>

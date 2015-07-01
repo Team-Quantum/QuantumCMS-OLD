@@ -7,7 +7,44 @@ use Quantum\Data\NewsObject;
 
 class News implements IPage{
 
-    private function BBCodeParser($message) {
+    /**
+     * Automatic called before smarty display is called
+     * @param $core Core
+     * @param $smarty \Smarty
+     * @return void
+     */
+    public function preRender($core, $smarty)
+    {
+        // TODO: Load News From Database [Config -> Wbb3, Wbb4, internalDB, ...]
+
+        $text = 'Hallo liebe Community,<br/>die [u]wöchentliche Serverwartung[/u] wird morgen früh [color=#ff6600]um 3 Uhr[/color] stattfinden.<br/>Ab dann ist der [color=#ff6600]Gameserver für ca. 1h nicht erreichbar[/color].<br/><br/>Wir bitten um Verständnis für die Unannehmlichkeiten.<br/><br/>[youtube=?v=c0oMwcMSqoY][/youtube]<br/>Liebe Grüße,<br/>.PolluX';
+
+        $news = new NewsObject($this->parseBBCode($this->cutString($text)), 'http://www.metin2dev.org', true);
+        $smarty->assign('news_wbb', $news);
+    }
+
+    /**
+     * Automatic called after preRender and before smarty display is called
+     * @param $core Core
+     * @param $smarty \Smarty
+     * @return string template file for page content
+     */
+    public function getTemplate($core, $smarty)
+    {
+        return 'pages/news.tpl';
+    }
+
+    /**
+     * Automatic called after smarty display is called. Example usage: clean up cache
+     * @param $core Core
+     * @param $smarty \Smarty
+     * @return void
+     */
+    public function postRender($core, $smarty)
+    {
+    }
+
+    private function parseBBCode($message) {
         return nl2br(utf8_encode(preg_replace(array(  '~\[b\](.*?)\[/b\]~s',
             '~\[i\](.*?)\[/i\]~s',
             '~\[u\](.*?)\[/u\]~s',
@@ -33,8 +70,8 @@ class News implements IPage{
             ), $message)));
     }
 
-    private function CutString($text){
-      //  return count($text);
+    private function cutString($text){
+        //  return count($text);
 
         if(strlen($text)>500){
             $msg = substr($text, 0, 500);
@@ -43,44 +80,5 @@ class News implements IPage{
             return substr($text, 0, 500);
         }
 
-    }
-
-    /**
-     * Automatic called before smarty display is called
-     * @param $core Core
-     * @param $smarty \Smarty
-     * @return void
-     */
-    public function preRender($core, $smarty)
-    {
-        // TODO: Load News From Database [Config -> Wbb3, Wbb4, internalDB, ...]
-
-        $text = 'Hallo liebe Community,<br/>die [u]wöchentliche Serverwartung[/u] wird morgen früh [color=#ff6600]um 3 Uhr[/color] stattfinden.<br/>Ab dann ist der [color=#ff6600]Gameserver für ca. 1h nicht erreichbar[/color].<br/><br/>Wir bitten um Verständnis für die Unannehmlichkeiten.<br/><br/>[youtube=?v=c0oMwcMSqoY][/youtube]<br/>Liebe Grüße,<br/>.PolluX';
-
-        $news = new NewsObject($this->BBCodeParser($this->CutString($text)), 'http://www.metin2dev.org', true);
-        $smarty->assign('news_wbb', $news);
-    }
-
-    /**
-     * Automatic called after preRender and before smarty display is called
-     * @param $core Core
-     * @param $smarty \Smarty
-     * @return string template file for page content
-     */
-    public function getTemplate($core, $smarty)
-    {
-        // TODO: Implement getTemplate() method.
-        return 'pages/home.tpl';
-    }
-
-    /**
-     * Automatic called after smarty display is called. Example usage: clean up cache
-     * @param $core Core
-     * @param $smarty \Smarty
-     * @return void
-     */
-    public function postRender($core, $smarty)
-    {
-        // TODO: Implement postRender() method.
     }
 }
