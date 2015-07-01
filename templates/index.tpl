@@ -23,12 +23,6 @@
             </div>
 
             <div id="box">
-                <div class="info">
-                    Super Epic CMS ihr Young Sluts! <3
-                </div>
-            </div>
-
-            <div id="box">
                 {* Page Content *}
                 {include file=$pageTemplate}
             </div>
