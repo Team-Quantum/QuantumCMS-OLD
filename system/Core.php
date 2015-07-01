@@ -62,6 +62,8 @@ class Core {
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);
         $this->smarty->assign('system_currentUser', null);
+        $this->smarty->assign('system_date', date('d-m-Y'));
+        $this->smarty->assign('system_time', date('H:i:s'));
 
         // Read query param
         $query = array_key_exists('q', $_GET) ? $_GET['q'] : '';
@@ -69,6 +71,8 @@ class Core {
         $page = 'Home';
         if(strlen($query) > 0) {
             $page = $path[0];
+            $category = $path[1];
+            $item = $path[2];
         }
 
         $pageFullName = "\\Quantum\\Pages\\" . $page;

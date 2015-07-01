@@ -46,6 +46,12 @@ body
     webkit-border-radius: 3px;
     webkit-box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
+#box #foot_links_main{
+    text-align: center;
+}
+#box #foot_links_main #footer_backlinks{
+    margin-right: 5px;
+}
 #box #footer_copyright{
     text-align: center;
 }
