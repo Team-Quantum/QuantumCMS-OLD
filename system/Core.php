@@ -2,6 +2,7 @@
 
 namespace Quantum;
 
+use Quantum\DBO\Account;
 use Quantum\pages\IPage;
 
 class Core {
@@ -30,6 +31,11 @@ class Core {
      * @var Translator
      */
     private $translator;
+
+    /**
+     * @var Account
+     */
+    private $currentAccount;
 
     /**
      * @var Core
@@ -61,7 +67,7 @@ class Core {
         $this->smarty->assign('system_slogan', 'Quantum CMS <3');
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);
-        $this->smarty->assign('system_currentUser', null);
+        $this->smarty->assign('system_currentUser', $this->getAccount());
         $this->smarty->assign('system_date', date('d-m-Y'));
         $this->smarty->assign('system_time', date('H:i:s'));
 
@@ -210,6 +216,10 @@ class Core {
         return $json->{'success'} == 1;
     }
 
+    public function redirect($page) {
+        header('Location: ' . $this->settings['external_path'] . $page);
+    }
+
     public function addError($message) {
         $errors = $this->smarty->getTemplateVars('errors');
         if($errors === null) {
@@ -217,6 +227,63 @@ class Core {
         }
         $errors[] = $this->translator->translate($message);
         $this->smarty->assign('errors', $errors);
+    }
+
+    /**
+     * Create the hash value from the clean text (use this function because this can be overwritten by plugins)
+     * @param $clean
+     * @param $source mixed On Login its an \Quantum\DBO\Account use this source if the hash contains a seed
+     * @return string hash value
+     */
+    public function createHash($clean, $source) {
+        // todo implement plugin possibility to override this
+
+        // Default MySQL5 Hash implementation
+        return '*' . strtoupper(sha1(sha1($clean, true)));
+    }
+
+    /**
+     * Sets the current login into the session
+     * @param $account Account
+     */
+    public function setAccount($account) {
+        if($account == null) {
+            $_SESSION['aid'] = null;
+            $_SESSION['lid'] = null;
+            $_SESSION['pass'] = null;
+        } else {
+            $_SESSION['aid'] = $account->getId();
+            $_SESSION['lid'] = $account->getLogin();
+
+            // Sessions are stored on server side -> no attack possibility
+            // Also I store it to stop every session when the password
+            // got changed (security)
+            $_SESSION['pass'] = $account->getPassword();
+        }
+
+        $this->currentAccount = $account;
+    }
+
+    /**
+     * Gets the current logged in user
+     * @return null|Account
+     */
+    public function getAccount() {
+        if($this->currentAccount != null)
+            return $this->currentAccount;
+
+        // Don't call to database here
+        if($_SESSION['aid'] == null)
+            return null;
+
+        $em = $this->getServerDatabase('account')->getEntityManager();
+        $this->currentAccount = $em->getRepository('\\Quantum\\DBO\\Account')->findOneBy(array(
+            'id' => $_SESSION['aid'],
+            'login' => $_SESSION['lid'],
+            'password' => $_SESSION['pass']
+        ));
+
+        return $this->currentAccount;
     }
 
 }

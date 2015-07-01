@@ -5,6 +5,7 @@
         <a href="{$system_path}Register">{lang}system.page.register{/lang}</a>
     {else}
         {lang}system.main.welcome{/lang} <b>{$system_currentUser->getLogin()}</b>.
+        <a href="{$system_path}Logout">{lang}system.page.logout{/lang}</a>
     {/if}
 </div>
 <div class="navright">
