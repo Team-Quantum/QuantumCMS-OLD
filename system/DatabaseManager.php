@@ -57,7 +57,8 @@ class DatabaseManager {
         $tool = new SchemaTool($this->entityManager);
         $classes = array(
             $this->entityManager->getClassMetadata('Quantum\DBO\CoreStatus'),
-            $this->entityManager->getClassMetadata('Quantum\DBO\Translation')
+            $this->entityManager->getClassMetadata('Quantum\DBO\Translation'),
+            $this->entityManager->getClassMetadata('Quantum\DBO\Download')
         );
         $tool->updateSchema($classes);
     }
