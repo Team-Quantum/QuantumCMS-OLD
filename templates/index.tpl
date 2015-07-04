@@ -32,10 +32,14 @@
                 <div id="foot_links_main">
                     {* Footer with Backlinks *}
                     <div id="footer_backlinks">
-                        <a href="#" target="_blank"><img height="32px" width="32px" src="img/icons/footer/youtube.png"/>
+                        <a href="#" target="_blank">
+                            <img height="32px" width="32px" src="{$system_path}img/icons/footer/youtube.png"/>
                         </a>
-                        <a href="#" target="_blank"><img height="32px" width="32px" src="img/icons/footer/fb.png"/></a>
-                        <a href="#" target="_blank"><img height="32px" width="32px" src="img/icons/footer/twitter.png"/>
+                        <a href="#" target="_blank">
+                            <img height="32px" width="32px" src="{$system_path}img/icons/footer/fb.png"/>
+                        </a>
+                        <a href="#" target="_blank">
+                            <img height="32px" width="32px" src="{$system_path}img/icons/footer/twitter.png"/>
                         </a>
                     </div>
                     <a href="#" target="_blank">Impressum</a> |

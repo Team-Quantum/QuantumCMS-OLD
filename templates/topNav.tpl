@@ -5,6 +5,13 @@
         <a href="{$system_path}Register">{lang}system.page.register{/lang}</a>
     {else}
         {lang}system.main.welcome{/lang} <b>{$system_currentUser->getLogin()}</b>.
+
+        <a href="{$system_path}User/Home">{lang}system.page.user{/lang}</a> |
+
+        {if $system_userManager->hasPrivilege('system_admin')}
+            <a href="{$system_path}Admin/Home">{lang}system.page.admin{/lang}</a> |
+        {/if}
+
         <a href="{$system_path}Logout">{lang}system.page.logout{/lang}</a>
     {/if}
 </div>

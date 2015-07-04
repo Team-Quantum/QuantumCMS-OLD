@@ -65,11 +65,14 @@ class Core {
         // Only for development:
         $this->internalDatabase->createStructure();
 
+        $this->smarty->debugging = $this->settings['in_dev'];
+
         $this->smarty->assign('system_pageTitle', 'Team Quantum');
         $this->smarty->assign('system_slogan', 'Quantum CMS <3');
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);
         $this->smarty->assign('system_currentUser', $this->getAccount());
+        $this->smarty->assign('system_userManager', $this->getUserManager());
         $this->smarty->assign('system_date', date('d-m-Y'));
         $this->smarty->assign('system_time', date('H:i:s'));
 

@@ -74,7 +74,7 @@ abstract class ProtectedPage implements IPage {
         if($this->rights)
             return $this->getTemplateI($core, $smarty);
 
-        return '404.tpl';
+        return '403.tpl';
     }
 
     /**

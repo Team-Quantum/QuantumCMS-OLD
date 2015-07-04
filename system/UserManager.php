@@ -48,9 +48,6 @@ class UserManager {
     public function __construct($core) {
         $this->core = $core;
 
-        if($this->currentAccount != null)
-            return $this->currentAccount;
-
         // Don't call to database here
         if($_SESSION['aid'] != null) {
             $em = $core->getServerDatabase('account')->getEntityManager();
