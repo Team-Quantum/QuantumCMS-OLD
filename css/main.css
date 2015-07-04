@@ -353,7 +353,7 @@ input[type=text],input[type=password],input[type=email],textarea,select
     webkit-border-radius: 3px;
     webkit-box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
-input[type=submit],input.submit
+input[type=submit],input.submit,input[type=reset]
 {
     background: #08c;
     border: 1px solid #06a;

@@ -35,7 +35,7 @@ class Account {
     protected $email;
 
     /**
-     * @var date
+     * @var \DateTime
      */
     protected $create_time;
 
@@ -65,7 +65,7 @@ class Account {
     protected $status;
 
     /**
-     * @var date
+     * @var \DateTime
      */
     protected $availDt;
 
@@ -154,14 +154,14 @@ class Account {
     }
 
     /**
-     * @return date
+     * @return \DateTime
      */
     public function getCreateTime() {
         return $this->create_time;
     }
 
     /**
-     * @param date $create_time
+     * @param \DateTime $create_time
      */
     public function setCreateTime($create_time) {
         $this->create_time = $create_time;
@@ -249,6 +249,10 @@ class Account {
      */
     public function setAvailDt($availDt) {
         $this->availDt = $availDt;
+    }
+
+    public function __construct() {
+       $this->availDt = new \DateTime('0000-00-00 00:00:00');
     }
 
 }

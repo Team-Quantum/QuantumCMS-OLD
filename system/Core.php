@@ -222,12 +222,17 @@ class Core {
         header('Location: ' . $this->settings['external_path'] . $page);
     }
 
-    public function addError($message) {
+    public function addError($message, array $format = array()) {
         $errors = $this->smarty->getTemplateVars('errors');
         if($errors === null) {
             $errors = array();
         }
-        $errors[] = $this->translator->translate($message);
+        $message = $this->translator->translate($message);
+        foreach($format as $key => $value) {
+            $message = str_replace('%'.$key.'%', $value, $message);
+        }
+
+        $errors[] = $message;
         $this->smarty->assign('errors', $errors);
     }
 

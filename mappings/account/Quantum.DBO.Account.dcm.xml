@@ -19,7 +19,7 @@
         <field name="question2" type="string" />
         <field name="answer2" type="string" />
         <field name="status" type="string" />
-        <field name="availDt" type="datetime" />
+        <field name="availDt" type="datetime" nullable="true" />
     </entity>
 
 </doctrine-mapping>
