@@ -1,0 +1,10 @@
+{
+  "Privileges": [
+    {
+      "Name": "system.privilege.admin",
+      "TechnicalName": "system_admin",
+      "Description": "system.privilege.admin.desc",
+      "Category": "Admin"
+    }
+  ]
+}

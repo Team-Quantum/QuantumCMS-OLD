@@ -9,6 +9,7 @@ $core = new \Quantum\Core();
 if(!array_key_exists('type', $_GET)) {
     echo '<a href="tools.php?type=import">Import languages</a><br />';
     echo '<a href="tools.php?type=export">Export languages</a><br />';
+    echo '<a href="tools.php?type=importPrivileges">Import privileges</a><br />';
     echo '<a href="tools.php?type=exampleData">Generate Example Data</a><br />';
 } else {
     if($_GET['type'] == 'import') {
@@ -59,6 +60,29 @@ if(!array_key_exists('type', $_GET)) {
             fclose($handle);
         }
 
+        echo 'Done';
+    } else if($_GET['type'] == 'importPrivileges') {
+        $data = json_decode(file_get_contents(ROOT_DIR . 'install' . DS . 'privileges' . DS . 'privileges.json'));
+        $privileges = $data->{'Privileges'};
+        $em = $core->getInternalDatabase()->getEntityManager();
+
+        foreach($privileges as $privilege) {
+            // Check if database entry exists
+            $tmp = $em->getRepository('\\Quantum\\DBO\\Privilege')->findOneBy(array(
+                'technicalName' => $privilege->{'TechnicalName'}
+            ));
+            if($tmp === null) {
+                $tmp = new \Quantum\DBO\Privilege();
+                $tmp->setTechnicalName($privilege->{'TechnicalName'});
+            }
+
+            $tmp->setName($privilege->{'Name'});
+            $tmp->setCategory($privilege->{'Category'});
+            $tmp->setDesc($privilege->{'Description'});
+
+            $em->persist($tmp);
+        }
+        $em->flush();
         echo 'Done';
     } else if($_GET['type'] == 'exampleData') {
         $coreStatuses = array();

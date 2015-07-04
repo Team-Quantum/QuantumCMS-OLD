@@ -6,6 +6,7 @@ use Quantum\DBO\Account;
 use Quantum\DBO\Group;
 use Quantum\DBO\GroupPrivilege;
 use Quantum\DBO\InternalAccount;
+use Quantum\DBO\Privilege;
 use Quantum\DBO\UserGroup;
 
 class UserManager {
@@ -29,6 +30,12 @@ class UserManager {
      * @var array
      */
     private $privileges = array();
+
+    /**
+     * Used for fast search
+     * @var array
+     */
+    private $stringPrivileges = array();
 
     /**
      * @var Core
@@ -130,7 +137,10 @@ class UserManager {
 
             /** @var $groupPrivilege GroupPrivilege */
             foreach($groupPrivileges as $groupPrivilege) {
-                $this->privileges[] = $emI->find('\\Quantum\\DBO\\Privilege', $groupPrivilege->getId());
+                /** @var $privilege Privilege */
+                $privilege = $emI->find('\\Quantum\\DBO\\Privilege', $groupPrivilege->getId());
+                $this->stringPrivileges[] = $privilege->getTechnicalName();
+                $this->privileges[] = $privilege;
             }
         }
     }
@@ -141,8 +151,7 @@ class UserManager {
      * @return bool
      */
     public function hasPrivilege($neededPrivilege) {
-        // todo implement
-        return false;
+        return in_array($neededPrivilege, $this->stringPrivileges);
     }
 
 

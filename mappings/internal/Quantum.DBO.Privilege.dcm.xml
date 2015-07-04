@@ -9,6 +9,9 @@
         </id>
 
         <field name="name" type="string" length="100" />
+        <field name="technicalName" type="string" length="100" />
+        <field name="desc" type="string" length="100" />
+        <field name="category" type="string" length="100" />
     </entity>
 
 </doctrine-mapping>
