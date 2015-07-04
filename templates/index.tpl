@@ -12,9 +12,6 @@
             <div id="headertitle">
                 {$system_pageTitle} - <span class="headertext">{$system_slogan}</span>
             </div>
-            <div id="download_button">
-                <a href="#" class="download">DOWNLOAD CLIENT<br /><span class="download_dec">version 1.0</span></a>
-            </div>
         </div>
         <div id="left">
             <div id="box">
@@ -31,9 +28,11 @@
                 <div id="foot_links_main">
                     {* Footer with Backlinks *}
                     <div id="footer_backlinks">
-                        <a href="#" target="_blank"><img height="32px" width="32px" src="img/icons/footer/youtube.png"/></a>
+                        <a href="#" target="_blank"><img height="32px" width="32px" src="img/icons/footer/youtube.png"/>
+                        </a>
                         <a href="#" target="_blank"><img height="32px" width="32px" src="img/icons/footer/fb.png"/></a>
-                        <a href="#" target="_blank"><img height="32px" width="32px" src="img/icons/footer/twitter.png"/></a>
+                        <a href="#" target="_blank"><img height="32px" width="32px" src="img/icons/footer/twitter.png"/>
+                        </a>
                     </div>
                     <a href="#" target="_blank">Impressum</a> |
                     <a href="http://www.elitepvpers.com" target="_blank">Elitepvpers</a> |
@@ -55,7 +54,8 @@
         <div id="right">
             <div id="box">
                 <div class="info">
-                    Welcome! {$system_pageTitle} is a FREE-to-play massive online world packed with intense action and brutal fighting.
+                    Welcome! {$system_pageTitle} is a FREE-to-play massive online world packed with intense action and
+                    brutal fighting.
                 </div>
             </div>
             {foreach from=$system_sidebar_right item=tpl}

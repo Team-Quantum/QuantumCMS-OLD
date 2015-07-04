@@ -2,6 +2,8 @@
 
 namespace Quantum\Plugins\Stats;
 
+use Quantum\Core;
+use Quantum\DBO\CoreStatus;
 use Quantum\Plugins\ISidebar;
 use Quantum\Plugins\Plugin;
 
@@ -29,7 +31,23 @@ class StatsSidebar implements ISidebar {
         $database = $core->getServerDatabase('player');
         $size_pl = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Player')->findAll());
 
+        $this->getStatus($core, $smarty);
+
         $smarty->assign('accounts', $size_acc);
         $smarty->assign('players', $size_pl);
+    }
+
+    /**
+     * @param $core Core
+     * @param $smarty \Smarty
+     * returns an object with Channel Statuses
+     */
+    public function getStatus($core, $smarty){
+
+        $database = $core->getInternalDatabase('core_statuses');
+        $serverStatuses = $database->getEntityManager()->getRepository('Quantum\\DBO\\CoreStatus')->findAll();
+
+        $smarty->assign('serverstatuses', $serverStatuses);
+
     }
 }
