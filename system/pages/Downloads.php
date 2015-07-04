@@ -57,8 +57,8 @@ class Downloads implements IPage{
      */
     private function getDownloads($version, $db){
         return $db->getRepository('\\Quantum\\DBO\\Download')->findBy(array(
-           'version' => $version
+            'version' => $version,
+            'shown' => 1
         ));
-
     }
 }
