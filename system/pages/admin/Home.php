@@ -3,8 +3,7 @@
 namespace Quantum\Pages\Admin;
 
 use Quantum\Core;
-use Quantum\pages\IPage;
-use Quantum\pages\ProtectedPage;
+use Quantum\Pages\ProtectedPage;
 
 class Home extends ProtectedPage {
 

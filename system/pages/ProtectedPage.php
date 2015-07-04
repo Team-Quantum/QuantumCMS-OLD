@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantum\pages;
+namespace Quantum\Pages;
 
 use Quantum\Core;
 

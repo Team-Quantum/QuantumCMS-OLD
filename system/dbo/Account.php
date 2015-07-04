@@ -70,6 +70,11 @@ class Account {
     protected $availDt;
 
     /**
+     * @var integer
+     */
+    protected $empire;
+
+    /**
      * @return int
      */
     public function getId() {
@@ -253,6 +258,20 @@ class Account {
 
     public function __construct() {
        $this->availDt = new \DateTime('0000-00-00 00:00:00');
+    }
+
+    /**
+     * @return int
+     */
+    public function getEmpire() {
+        return $this->empire;
+    }
+
+    /**
+     * @param int $empire
+     */
+    public function setEmpire($empire) {
+        $this->empire = $empire;
     }
 
 }

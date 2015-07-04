@@ -8,6 +8,7 @@
             <generator strategy="AUTO" />
         </id>
 
+        <field name="account_id" type="integer" />
         <field name="name" type="string" />
         <field name="job" type="integer" />
         <field name="playtime" type="integer" />
