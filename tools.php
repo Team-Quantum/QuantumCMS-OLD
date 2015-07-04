@@ -2,6 +2,8 @@
 
 require_once('vendor/autoload.php');
 
+session_start();
+
 $core = new \Quantum\Core();
 
 if(!array_key_exists('type', $_GET)) {

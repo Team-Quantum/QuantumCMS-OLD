@@ -33,9 +33,9 @@ class Core {
     private $translator;
 
     /**
-     * @var Account
+     * @var UserManager
      */
-    private $currentAccount;
+    private $userManager;
 
     /**
      * @var Core
@@ -52,6 +52,7 @@ class Core {
         $this->initConfiguration();
         $this->initDatabases();
         $this->initTranslator();
+        $this->initUserManager();
         $this->initPlugins();
 
         Core::$instance = $this;
@@ -189,6 +190,9 @@ class Core {
      * @return string
      */
     public function getRecaptchaHtml() {
+        if($this->settings['in_dev'])
+            return '';
+
         return '<script src="https://www.google.com/recaptcha/api.js"></script>' .
                 '<div class="g-recaptcha" data-sitekey="' . $this->settings['recaptcha']['public'] . '"></div>';
     }
@@ -198,6 +202,10 @@ class Core {
      * @return boolean
      */
     public function validateCaptcha() {
+        if($this->settings['in_dev']) {
+            return true;
+        }
+
         $recaptchURL = 'https://www.google.com/recaptcha/api/siteverify';
         $secret = $this->settings['recaptcha']['private'];
         $data = array(
@@ -254,21 +262,7 @@ class Core {
      * @param $account Account
      */
     public function setAccount($account) {
-        if($account == null) {
-            $_SESSION['aid'] = null;
-            $_SESSION['lid'] = null;
-            $_SESSION['pass'] = null;
-        } else {
-            $_SESSION['aid'] = $account->getId();
-            $_SESSION['lid'] = $account->getLogin();
-
-            // Sessions are stored on server side -> no attack possibility
-            // Also I store it to stop every session when the password
-            // got changed (security)
-            $_SESSION['pass'] = $account->getPassword();
-        }
-
-        $this->currentAccount = $account;
+        $this->userManager->setAccount($account);
     }
 
     /**
@@ -276,25 +270,19 @@ class Core {
      * @return null|Account
      */
     public function getAccount() {
-        if($this->currentAccount != null)
-            return $this->currentAccount;
-
-        // Don't call to database here
-        if($_SESSION['aid'] == null)
-            return null;
-
-        $em = $this->getServerDatabase('account')->getEntityManager();
-        $this->currentAccount = $em->getRepository('\\Quantum\\DBO\\Account')->findOneBy(array(
-            'id' => $_SESSION['aid'],
-            'login' => $_SESSION['lid'],
-            'password' => $_SESSION['pass']
-        ));
-
-        return $this->currentAccount;
+        return $this->userManager->getCurrentAccount();
     }
 
     private function initPlugins() {
         PluginManager::load($this);
+    }
+
+    private function initUserManager() {
+        $this->userManager = new UserManager($this);
+    }
+
+    public function getUserManager() {
+        return $this->userManager;
     }
 
 }

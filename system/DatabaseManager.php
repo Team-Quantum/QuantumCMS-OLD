@@ -6,6 +6,7 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
+use Quantum\Utils\StringUtils;
 
 class DatabaseManager {
 
@@ -39,7 +40,7 @@ class DatabaseManager {
             $connectionParams['path'] = $connectionSettings['path'];
             $connectionParams['driver'] = 'pdo_sqlite';
         } else {
-            throw new \Exception("Unkown database type '" . $connectionSettings['type'] . "'");
+            throw new \Exception("Unknown database type '" . $connectionSettings['type'] . "'");
         }
 
         // Second Step: Create configuration
@@ -51,16 +52,23 @@ class DatabaseManager {
 
     /**
      * Creates the structure into the database
-     * Only works on internal database
+     * NEVER! Call this on a server database!
      */
     public function createStructure() {
         $tool = new SchemaTool($this->entityManager);
-        $classes = array(
-            $this->entityManager->getClassMetadata('Quantum\DBO\CoreStatus'),
-            $this->entityManager->getClassMetadata('Quantum\DBO\Translation'),
-            $this->entityManager->getClassMetadata('Quantum\DBO\InternalAccount'),
-            $this->entityManager->getClassMetadata('Quantum\DBO\Download')
-        );
+        $classes = array();
+
+        $dir = ROOT_DIR . 'mappings' . DS . 'internal' . DS;
+        if($handle = opendir($dir)) {
+            while(false !== ($entry = readdir($handle))) {
+                if(is_file($dir.$entry) && StringUtils::endsWith($entry, '.dcm.xml')) {
+                    $entry = substr($entry, 0, strlen($entry) - strlen('.dcm.xml'));
+                    $entry = str_replace('.', '\\', $entry);
+                    $classes[] = $this->entityManager->getClassMetadata($entry);
+                }
+            }
+        }
+
         $tool->updateSchema($classes);
     }
 

@@ -26,8 +26,13 @@ class Login implements IPage {
                     // Check password
                     $inputHash = $core->createHash($_POST['password'], $account);
                     if($inputHash == $account->getPassword()) {
-                        $core->redirect('Home');
                         $core->setAccount($account);
+
+                        if($core->getUserManager()->getCurrentInternalAccount() == null) {
+                            $core->redirect('MigrateAccount');
+                        } else {
+                            $core->redirect('Home');
+                        }
                     } else {
                         $core->addError('system.errors.login.wrongpwd');
                     }
