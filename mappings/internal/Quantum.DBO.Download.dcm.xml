@@ -1,0 +1,17 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Quantum\DBO\Download" table="downloads">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="file" type="string" length="100" />
+        <field name="displayName" type="string" length="100" />
+        <field name="version" type="string" />
+        <field name="shown" type="boolean" />
+    </entity>
+
+</doctrine-mapping>
