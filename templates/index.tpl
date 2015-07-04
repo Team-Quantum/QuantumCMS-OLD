@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>{$system_pageTitle}</title>
     <link rel="stylesheet" type="text/css" href="{$system_path}css/main.css" />
@@ -11,6 +12,9 @@
         <div id="headerlogo">
             <div id="headertitle">
                 {$system_pageTitle} - <span class="headertext">{$system_slogan}</span>
+            </div>
+            <div id="download_button">
+                <a href="{$system_path}Downloads" class="download">DOWNLOADS<br><span class="download_dec">go to our Download page</span></a>
             </div>
         </div>
         <div id="left">

@@ -30,11 +30,25 @@ class StatsSidebar implements ISidebar {
 
         $database = $core->getServerDatabase('player');
         $size_pl = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Player')->findAll());
+        $size_guilds = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Guild')->findAll());
 
+        // TODO: Write Cronjob and Cache SQL things
+        $onlineNow = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Player')->findBy(array(
+            'name'   =>  'bruh'
+        )));
+        $onlineLastDay = count($database->getEntityManager()->getRepository('Quantum\\DBO\\Player')->findBy(array(
+            'name'   =>  'NONAME'
+        )));
+
+        // Get Serverstatus
         $this->getStatus($core, $smarty);
 
+        // Assign Smarty Variables
         $smarty->assign('accounts', $size_acc);
         $smarty->assign('players', $size_pl);
+        $smarty->assign('guilds', $size_guilds);
+        $smarty->assign('playerOnlineNow', $onlineNow);
+        $smarty->assign('playerOnlineLastDay', $onlineLastDay);
     }
 
     /**
