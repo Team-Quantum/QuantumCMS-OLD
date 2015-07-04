@@ -48,13 +48,13 @@ class ContainerPage implements IPage {
         $query = array_key_exists('q', $_GET) ? $_GET['q'] : '';
         $path = explode('/', $query);
         $page = $this->default;
-        if(strlen($query) > 1) {
+        if(count($path) > 1 && $path[1] != '') {
             $page = $path[1];
         }
 
         // Import file
-        if(file_exists($this->directory . $page)) {
-            require_once($this->directory . $page);
+        if(file_exists($this->directory . $page . '.php')) {
+            require_once($this->directory . $page . '.php');
         }
 
         $pageFullName = $this->namespace . $page;
