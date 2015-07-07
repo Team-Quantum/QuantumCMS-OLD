@@ -2,3 +2,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule (.*) index.php?q=$1 [L,QSA]
+RewriteRule ^(vendor/|templates/|mappings/|system/|cronjob\.php|config\.php|config\.example\.php) - [F,L,NC]
