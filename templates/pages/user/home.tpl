@@ -24,7 +24,7 @@
 </div>
 <div style="float: left; padding-left: 20px;">
     {foreach from=$home_menuPoints item=menuPoint}
-        <a href="{$system_path}{$menuPoint['link']}">{$menuPoint['title']}</a><br />
+        <li><a href="{$system_path}{$menuPoint['link']}">{$menuPoint['title']}</a></li>
     {/foreach}
 </div>
 <div style="clear: both;">

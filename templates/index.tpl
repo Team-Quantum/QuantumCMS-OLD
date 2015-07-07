@@ -11,7 +11,9 @@
         <!--<iframe width="1px" height="1px" src="https://www.youtube.com/embed/5CLFwCUyWqY?autoplay=1&loop=1" frameborder="0" allowfullscreen></iframe>-->
         <div id="headerlogo">
             <div id="headertitle">
-                {$system_pageTitle} - <span class="headertext">{$system_slogan}</span>
+                <a href="{$system_path}" target="_self">
+                    {$system_pageTitle} - <span class="headertext">{$system_slogan}</span>
+                </a>
             </div>
             <div id="download_button">
                 <a href="{$system_path}Downloads" class="download">DOWNLOADS<br><span class="download_dec">go to our Download page</span></a>
