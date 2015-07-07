@@ -7,4 +7,4 @@ session_start();
 require_once('vendor/autoload.php');
 
 $core = new \Quantum\Core();
-$cronjobs = new \Quantum\Cronjobs\CronJobs($core);
+$core->executeCronJobs();

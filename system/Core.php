@@ -108,6 +108,13 @@ class Core {
     }
 
     /**
+     * Run all cron jobs which are needed
+     */
+    public function executeCronJobs() {
+        PluginManager::processCronJobs($this);
+    }
+
+    /**
      * @return Translator
      */
     public function getTranslator() {
@@ -286,6 +293,13 @@ class Core {
 
     public function getUserManager() {
         return $this->userManager;
+    }
+
+    /**
+     * @return bool
+     */
+    public function inDev() {
+        return $this->settings['in_dev'] == true;
     }
 
 }
