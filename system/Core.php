@@ -103,11 +103,6 @@ class Core {
             throw new \Exception("Page '" . $pageFullName . "' is invalid.'");
         }
 
-        $dependencies = [
-            'smarty' => $this->smarty,
-            'core'   => $this
-        ];
-
         $this->doAuthorization($pageClass);
 
         if ($pageClass instanceof ContainerPage) {
@@ -126,9 +121,10 @@ class Core {
         }
         array_shift($path);
 
-        $dependencies['args'] = $path;
+        $pageClass->setSmarty($this->smarty);
+        $pageClass->setCore($this);
+        $pageClass->setArgs($path);
 
-        $pageClass->inject($dependencies);
         $pageClass->preRender($this, $this->smarty);
         $this->smarty->assign('pageTemplate', $pageClass->getTemplate($this, $this->smarty));
 
