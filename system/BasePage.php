@@ -25,13 +25,19 @@ abstract class BasePage {
      */
     protected function redirect($url)
     {
-        header(sprintf('Location: %s'));
+        header(sprintf('Location: %s', $url));
         exit;
     }
 
+    /**
+     * Redirect to a specific page
+     *
+     * @param $page
+     */
     protected function redirectTo($page)
     {
-
+        header('Location: ' . $this->core->getSettings()['external_path'] . $page);
+        exit;
     }
 
     /**
