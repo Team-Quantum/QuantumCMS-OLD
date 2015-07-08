@@ -1,10 +1,10 @@
 <?php
+namespace App\Pages;
 
-namespace Quantum\pages;
-
+use Quantum\BasePage;
 use Quantum\Core;
 
-interface IPage {
+class Logout extends BasePage {
 
     /**
      * Automatic called before smarty display is called
@@ -12,7 +12,12 @@ interface IPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function preRender($core, $smarty);
+    public function preRender($core, $smarty) {
+        $core->setAccount(null);
+        $core->redirect('Home');
+
+        exit();
+    }
 
     /**
      * Automatic called after preRender and before smarty display is called
@@ -20,7 +25,9 @@ interface IPage {
      * @param $smarty \Smarty
      * @return string template file for page content
      */
-    public function getTemplate($core, $smarty);
+    public function getTemplate($core, $smarty) {
+        // never called
+    }
 
     /**
      * Automatic called after smarty display is called. Example usage: clean up cache
@@ -28,6 +35,7 @@ interface IPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function postRender($core, $smarty);
-
+    public function postRender($core, $smarty) {
+        // never called
+    }
 }

@@ -1,21 +1,19 @@
 <?php
+namespace App\Pages\User;
 
-namespace Quantum\Pages\User;
-
+use Quantum\BasePage;
 use Quantum\Core;
 use Quantum\DBO\Player;
-use Quantum\Pages\ProtectedPage;
 use Quantum\Translator;
 
-class Home extends ProtectedPage {
-
+class Home extends BasePage {
     /**
      * Automatic called before smarty display is called
      * @param $core Core
      * @param $smarty \Smarty
      * @return void
      */
-    public function preRenderI($core, $smarty) {
+    public function preRender($core, $smarty) {
         // Calculate play time
         $em = $core->getServerDatabase('player')->getEntityManager();
         $players = $em->getRepository('\\Quantum\\DBO\\Player')->findBy(array(
@@ -64,7 +62,7 @@ class Home extends ProtectedPage {
      * @param $smarty \Smarty
      * @return string template file for page content
      */
-    public function getTemplateI($core, $smarty) {
+    public function getTemplate($core, $smarty) {
         return 'pages/user/home.tpl';
     }
 
@@ -74,17 +72,8 @@ class Home extends ProtectedPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function postRenderI($core, $smarty) {
+    public function postRender($core, $smarty) {
 
-    }
-
-    /**
-     * Returns the needed privilege if this is null then only logged in will check
-     * @param $core Core
-     * @return string|null
-     */
-    public function getNeededPrivilege($core) {
-        return null;
     }
 
     /**

@@ -1,6 +1,6 @@
 /vendor/*
 /.idea/*
-/templates/compiled/*.php
+/storage/templates/*.php
 /*.lock
 /config.php
 /*.iml

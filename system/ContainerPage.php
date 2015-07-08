@@ -1,10 +1,7 @@
 <?php
+namespace Quantum;
 
-namespace Quantum\pages;
-
-use Quantum\Core;
-
-class Logout implements IPage {
+class ContainerPage extends BasePage {
 
     /**
      * Automatic called before smarty display is called
@@ -12,11 +9,8 @@ class Logout implements IPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function preRender($core, $smarty) {
-        $core->setAccount(null);
-        $core->redirect('Home');
-
-        exit();
+    public function preRender($core, $smarty)
+    {
     }
 
     /**
@@ -25,8 +19,8 @@ class Logout implements IPage {
      * @param $smarty \Smarty
      * @return string template file for page content
      */
-    public function getTemplate($core, $smarty) {
-        // never called
+    public function getTemplate($core, $smarty)
+    {
     }
 
     /**
@@ -35,7 +29,7 @@ class Logout implements IPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function postRender($core, $smarty) {
-        // never called
+    public function postRender($core, $smarty)
+    {
     }
 }

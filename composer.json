@@ -19,7 +19,7 @@
   "autoload": {
     "psr-4": {
       "Quantum\\": "system/",
-      "Quantum\\Pages\\": "system/pages/"
+      "App\\": "app/"
     }
   }
 }

@@ -1,11 +1,13 @@
 <?php
+namespace App\Pages;
 
-namespace Quantum\Pages;
-
+use Quantum\BasePage;
 use Quantum\Core;
 use Quantum\DBO\InternalAccount;
+use Quantum\ProtectablePage;
 
-class MigrateAccount extends ProtectedPage {
+class MigrateAccount extends BasePage {
+    use ProtectablePage;
 
     /**
      * Automatic called before smarty display is called
@@ -13,7 +15,7 @@ class MigrateAccount extends ProtectedPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function preRenderI($core, $smarty) {
+    public function preRender($core, $smarty) {
         $smarty->assign('disable', $core->getUserManager()->getCurrentInternalAccount() !== null);
 
         if($core->getUserManager()->getCurrentInternalAccount() === null) {
@@ -60,7 +62,7 @@ class MigrateAccount extends ProtectedPage {
      * @param $smarty \Smarty
      * @return string template file for page content
      */
-    public function getTemplateI($core, $smarty) {
+    public function getTemplate($core, $smarty) {
         return 'pages/migrate_account.tpl';
     }
 
@@ -70,16 +72,7 @@ class MigrateAccount extends ProtectedPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function postRenderI($core, $smarty) {
+    public function postRender($core, $smarty) {
 
-    }
-
-    /**
-     * Returns the needed privilege if this is null then only logged in will check
-     * @param $core Core
-     * @return string|null
-     */
-    public function getNeededPrivilege($core) {
-        return null;
     }
 }

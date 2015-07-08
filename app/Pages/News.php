@@ -1,11 +1,11 @@
 <?php
+namespace App\Pages;
 
-namespace Quantum\pages;
-
+use Quantum\BasePage;
 use Quantum\Core;
 use Quantum\Data\NewsObject;
 
-class News implements IPage{
+class News extends BasePage{
 
     /**
      * Automatic called before smarty display is called
@@ -17,7 +17,7 @@ class News implements IPage{
     {
         // TODO: Load News From Database [Config -> Wbb3, Wbb4, internalDB, ...]
 
-        $text = 'Hallo liebe Community,<br/>die [u]wöchentliche Serverwartung[/u] wird morgen früh [color=#ff6600]um 3 Uhr[/color] stattfinden.<br/>Ab dann ist der [color=#ff6600]Gameserver für ca. 1h nicht erreichbar[/color].<br/><br/>Wir bitten um Verständnis für die Unannehmlichkeiten.<br/><br/>[youtube=?v=c0oMwcMSqoY][/youtube]<br/>Liebe Grüße,<br/>.PolluX';
+        $text = 'Hallo liebe Community,<br/>die [u]wï¿½chentliche Serverwartung[/u] wird morgen frï¿½h [color=#ff6600]um 3 Uhr[/color] stattfinden.<br/>Ab dann ist der [color=#ff6600]Gameserver fï¿½r ca. 1h nicht erreichbar[/color].<br/><br/>Wir bitten um Verstï¿½ndnis fï¿½r die Unannehmlichkeiten.<br/><br/>[youtube=?v=c0oMwcMSqoY][/youtube]<br/>Liebe Grï¿½ï¿½e,<br/>.PolluX';
 
         $news = new NewsObject($this->parseBBCode($this->cutString($text)), 'http://www.metin2dev.org', true);
         $smarty->assign('news_wbb', $news);

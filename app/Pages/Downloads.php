@@ -1,11 +1,12 @@
 <?php
-namespace Quantum\pages;
+namespace App\Pages;
 
 use Doctrine\ORM\EntityManager;
+use Quantum\BasePage;
 use Quantum\Core;
 //use Quantum\DatabaseManager;
 
-class Downloads implements IPage{
+class Downloads extends BasePage {
 
     /**
      * Automatic called before smarty display is called

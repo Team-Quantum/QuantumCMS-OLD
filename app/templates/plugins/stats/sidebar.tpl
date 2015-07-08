@@ -2,7 +2,9 @@
     <!-- Server Statistic -->
     <ul class="column_result2">
         <li class="result_column"><span><b>{lang}plugin.stats.server.title{/lang}</b></span></li>
-        <li>{lang}plugin.stats.updated{/lang}: {$serverstatuses[0]->getLastCheck()|date_format:"%H:%M:%S"} h</li>
+        {if isset($serverstatues[0])}
+            <li>{lang}plugin.stats.updated{/lang}: {$serverstatuses[0]->getLastCheck()|date_format:"%H:%M:%S"} h</li>
+        {/if}
 
         {foreach from=$serverstatuses item=channel}
             <li class="{if $channel->isStatus()}online{else}offline{/if}"><b>{$channel->getName()}</b></li>

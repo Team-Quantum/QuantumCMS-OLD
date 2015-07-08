@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <title>{$system_pageTitle}</title>
-    <link rel="stylesheet" type="text/css" href="{$system_path}css/main.css" />
-    <link rel="stylesheet" type="text/css" href="{$system_path}css/wiki.css" />
+    <link rel="stylesheet" type="text/css" href="{$system_path}assets/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="{$system_path}assets/css/wiki.css" />
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -35,13 +35,13 @@
                     {* Footer with Backlinks *}
                     <div id="footer_backlinks">
                         <a href="#" target="_blank">
-                            <img height="32px" width="32px" src="{$system_path}img/icons/footer/youtube.png"/>
+                            <img height="32px" width="32px" src="{$system_path}assets/img/icons/footer/youtube.png"/>
                         </a>
                         <a href="#" target="_blank">
-                            <img height="32px" width="32px" src="{$system_path}img/icons/footer/fb.png"/>
+                            <img height="32px" width="32px" src="{$system_path}assets/img/icons/footer/fb.png"/>
                         </a>
                         <a href="#" target="_blank">
-                            <img height="32px" width="32px" src="{$system_path}img/icons/footer/twitter.png"/>
+                            <img height="32px" width="32px" src="{$system_path}assets/img/icons/footer/twitter.png"/>
                         </a>
                     </div>
                     <a href="#" target="_blank">Impressum</a> |

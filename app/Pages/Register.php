@@ -1,13 +1,12 @@
 <?php
+namespace App\Pages;
 
-namespace Quantum\Pages;
-
-
+use Quantum\BasePage;
 use Quantum\Core;
 use Quantum\DBO\Account;
 use Quantum\DBO\InternalAccount;
 
-class Register implements IPage{
+class Register extends BasePage {
 
     /**
      * Automatic called before smarty display is called

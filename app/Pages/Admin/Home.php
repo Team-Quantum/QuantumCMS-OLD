@@ -1,11 +1,10 @@
 <?php
+namespace App\Pages\Admin;
 
-namespace Quantum\Pages\Admin;
-
+use Quantum\BasePage;
 use Quantum\Core;
-use Quantum\Pages\ProtectedPage;
 
-class Home extends ProtectedPage {
+class Home extends BasePage {
 
     /**
      * Automatic called before smarty display is called
@@ -13,7 +12,7 @@ class Home extends ProtectedPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function preRenderI($core, $smarty) {
+    public function preRender($core, $smarty) {
         // TODO: Implement preRender() method.
     }
 
@@ -23,7 +22,7 @@ class Home extends ProtectedPage {
      * @param $smarty \Smarty
      * @return string template file for page content
      */
-    public function getTemplateI($core, $smarty) {
+    public function getTemplate($core, $smarty) {
         return 'pages/admin/home.tpl';
     }
 
@@ -33,16 +32,8 @@ class Home extends ProtectedPage {
      * @param $smarty \Smarty
      * @return void
      */
-    public function postRenderI($core, $smarty) {
+    public function postRender($core, $smarty) {
         // TODO: Implement postRender() method.
     }
 
-    /**
-     * Returns the needed privilege if this is null then only logged in will check
-     * @param $core Core
-     * @return string|null
-     */
-    public function getNeededPrivilege($core) {
-        return 'system_admin';
-    }
 }
