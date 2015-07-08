@@ -1,14 +1,13 @@
 <?php
 namespace App\Pages;
 
+use Quantum\Authorization;
 use Quantum\BasePage;
 use Quantum\Core;
 use Quantum\DBO\InternalAccount;
-use Quantum\ProtectablePage;
 
 class MigrateAccount extends BasePage {
-    use ProtectablePage;
-
+    use Authorization;
     /**
      * Automatic called before smarty display is called
      * @param $core Core
