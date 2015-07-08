@@ -156,8 +156,7 @@ class Core {
      * Loads the configuration file
      */
     private function initConfiguration() {
-        require_once(ROOT_DIR . 'config.php');
-        $this->settings = $settings;
+        $this->settings = require ROOT_DIR . 'config.php';
     }
 
     private function initDatabases() {
