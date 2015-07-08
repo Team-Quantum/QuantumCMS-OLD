@@ -91,18 +91,46 @@ class Core {
             $page = $path[0];
         }
 
-        $pageFullName = "\\Quantum\\Pages\\" . $page;
+        $pageFullName = "\\App\\Pages\\" . $page;
         if(!class_exists($pageFullName)) {
             $this->smarty->assign('pageTemplate', '404.tpl');
             $this->smarty->display('index.tpl');
             return;
         }
-        /** @var $pageClass IPage */
+        /** @var $pageClass BasePage */
         $pageClass = new $pageFullName();
-        if(!($pageClass instanceof IPage)) {
+        if(!($pageClass instanceof BasePage)) {
             throw new \Exception("Page '" . $pageFullName . "' is invalid.'");
         }
 
+        $dependencies = [
+            'smarty' => $this->smarty,
+            'core'   => $this
+        ];
+
+        if (method_exists($pageClass, 'authorize')) {
+            if ( ! $pageClass->authorize($this)) {
+                $this->redirect('/');
+                exit;
+            }
+        }
+
+        if ($pageClass instanceof ContainerPage) {
+            $pageFullName = $pageFullName . '\\' . (isset($path[1]) ? $path[1] : '');
+            if (! class_exists($pageFullName)) {
+                $this->smarty->assign('pageTemplate', '404.tpl');
+                $this->smarty->display('index.tpl');
+                return;
+            }
+
+            array_shift($path);
+            $pageClass = new $pageFullName;
+        }
+        array_shift($path);
+
+        $dependencies['args'] = $path;
+
+        $pageClass->inject($dependencies);
         $pageClass->preRender($this, $this->smarty);
         $this->smarty->assign('pageTemplate', $pageClass->getTemplate($this, $this->smarty));
 
@@ -144,6 +172,14 @@ class Core {
         if(!defined('ROOT_DIR')) {
             define('ROOT_DIR', realpath(SYSTEM_DIR . '..') . DS);
         }
+
+        if (!defined('APP_DIR')) {
+            define('APP_DIR', ROOT_DIR . DS . 'app' . DS);
+        }
+
+        if (!defined('STORAGE_DIR')) {
+            define('STORAGE_DIR', ROOT_DIR . DS . 'storage' . DS);
+        }
     }
 
     /**
@@ -151,8 +187,8 @@ class Core {
      */
     private function initSmarty() {
         $this->smarty = new \Smarty();
-        $this->smarty->setTemplateDir('templates');
-        $this->smarty->setCompileDir('templates/compiled');
+        $this->smarty->setTemplateDir(APP_DIR.'templates');
+        $this->smarty->setCompileDir(STORAGE_DIR.'templates');
 
         $pluginDirectories = $this->smarty->getPluginsDir();
         $pluginDirectories[] = SYSTEM_DIR . 'smarty';
@@ -320,6 +356,16 @@ class Core {
 
     public function getUserManager() {
         return $this->userManager;
+    }
+
+    /**
+     * Expose the settings to the other classes
+     *
+     * @return array
+     */
+    public function getSettings()
+    {
+        return $this->settings;
     }
 
     /**
