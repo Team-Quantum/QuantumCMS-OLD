@@ -76,10 +76,17 @@ class Core {
         $this->smarty->assign('system_date', date('d-m-Y'));
         $this->smarty->assign('system_time', date('H:i:s'));
 
-        // Read query param
-        $query = array_key_exists('q', $_GET) ? $_GET['q'] : '';
+        // Serve pages even we don't have apache
+        if ( ! isset($_GET['q'])) {
+            $query = trim($this->getPathInfo(), '/');
+        } else {
+            // Read query param
+            $query = array_key_exists('q', $_GET) ? $_GET['q'] : '';
+        }
+
         $path = explode('/', $query);
         $page = 'Home';
+
         if(strlen($query) > 0) {
             $page = $path[0];
         }
@@ -280,6 +287,27 @@ class Core {
      */
     public function getAccount() {
         return $this->userManager->getCurrentAccount();
+    }
+
+    /**
+     * Get path info from path_info env variable or from url
+     *
+     * @return string
+     */
+    public function getPathInfo()
+    {
+        static $pathInfo;
+
+        if ($pathInfo == null) {
+            if (isset($_SERVER['PATH_INFO'])) {
+                $pathInfo = $_SERVER['PATH_INFO'];
+            } else {
+                $query = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+                $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+                $pathInfo = rtrim(str_replace('?'.$query, '', $uri), '/');
+            }
+        }
+        return $pathInfo;
     }
 
     private function initPlugins() {
