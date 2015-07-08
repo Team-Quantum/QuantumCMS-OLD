@@ -1,9 +1,11 @@
 <?php
 namespace App\Pages;
 
+use Quantum\Authorization;
 use Quantum\ContainerPage;
-use Quantum\ProtectablePage;
 
 class Admin extends ContainerPage {
-    use ProtectablePage;
+    use Authorization;
+
+    protected $neededPrivileges = 'system_admin';
 }

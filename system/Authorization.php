@@ -1,7 +1,7 @@
 <?php
 namespace Quantum;
 
-trait ProtectablePage {
+trait Authorization {
 
     protected $neededPrivileges = false;
 

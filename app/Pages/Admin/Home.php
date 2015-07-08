@@ -6,8 +6,6 @@ use Quantum\Core;
 
 class Home extends BasePage {
 
-    protected $neededPrivileges = 'system_admin';
-
     /**
      * Automatic called before smarty display is called
      * @param $core Core

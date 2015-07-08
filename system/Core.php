@@ -108,12 +108,7 @@ class Core {
             'core'   => $this
         ];
 
-        if (method_exists($pageClass, 'authorize')) {
-            if ( ! $pageClass->authorize($this)) {
-                $this->redirect('/');
-                exit;
-            }
-        }
+        $this->doAuthorization($pageClass);
 
         if ($pageClass instanceof ContainerPage) {
             $pageFullName = $pageFullName . '\\' . (isset($path[1]) ? $path[1] : '');
@@ -123,8 +118,11 @@ class Core {
                 return;
             }
 
+            $pageClass->preRender($this, $this->smarty);
+
             array_shift($path);
             $pageClass = new $pageFullName;
+            $this->doAuthorization($pageClass);
         }
         array_shift($path);
 
@@ -140,6 +138,21 @@ class Core {
         $this->smarty->display('index.tpl');
 
         $pageClass->postRender($this, $this->smarty);
+    }
+
+    /**
+     * Do authorization for a page
+     *
+     * @param BasePage $page
+     */
+    protected function doAuthorization(BasePage $page)
+    {
+        if (method_exists($page, 'authorize')) {
+            if ( ! $page->authorize($this)) {
+                $this->redirect('/');
+                exit;
+            }
+        }
     }
 
     /**
