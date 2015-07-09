@@ -171,7 +171,7 @@ class Core {
     /**
      * Throw page not found
      */
-    public function throwNotFound()
+    public function displayNotFound()
     {
         $this->smarty->assign('pageTemplate', '404.tpl');
         $this->smarty->display('index.tpl');
@@ -254,7 +254,7 @@ class Core {
         $this->exceptionHandler = new ExceptionHandler($this);
 
         $this->addException('\Quantum\Exceptions\NotFoundException', function (Core $core) {
-            $core->throwNotFound();
+            $core->displayNotFound();
         });
     }
 
