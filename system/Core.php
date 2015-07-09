@@ -76,10 +76,11 @@ class Core {
         $this->smarty->assign('system_date', date('d-m-Y'));
         $this->smarty->assign('system_time', date('H:i:s'));
 
-        $path = explode('/', $this->prepareUri());
+        $uri = $this->prepareUri();
+        $path = explode('/', $uri);
         $page = $this->settings['default_page'];
 
-        if(count($path) > 0) {
+        if(count($path) > 0 && $uri !== '') {
             $page = $path[0];
         }
 
