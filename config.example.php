@@ -2,7 +2,7 @@
 
 return [
     # The URL under which the main site is accessible with trailing slash
-    'external_path' => 'http://localhost/',
+    'base_path' => '/',
 
     # Only for development purposes
     'in_dev' => true,
