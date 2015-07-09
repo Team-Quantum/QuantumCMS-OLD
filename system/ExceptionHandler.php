@@ -2,6 +2,8 @@
 
 namespace Quantum;
 
+use Closure;
+
 class ExceptionHandler {
 
     /**
@@ -9,15 +11,41 @@ class ExceptionHandler {
      */
     private $exception;
 
+    protected $exceptions = [];
+    /**
+     * @var Core
+     */
+    private $core;
+
     /**
      * ExceptionHandler constructor.
+     * @param Core $core
      */
-    public function __construct() {
+    public function __construct(Core $core)
+    {
+        $this->core = $core;
         set_exception_handler(array($this, 'handleException'));
     }
 
-    public function handleException(\Exception $exception) {
+    /**
+     * @param $type
+     * @param callable $closure
+     */
+    public function pushError($type, Closure $closure)
+    {
+        $this->exceptions = array_merge([$type => $closure], $this->exceptions);
+    }
+
+    public function handleException(\Exception $exception)
+    {
         $this->exception = $exception;
+
+        foreach ($this->exceptions as $e => $closure) {
+            if ($exception instanceof $e) {
+                $closure($this->core);
+                return;
+            }
+        }
 
         $code = '
                 <html>
@@ -40,7 +68,8 @@ class ExceptionHandler {
         echo $code;
     }
 
-    public function createBackTraceCode(array $trace) {
+    public function createBackTraceCode(array $trace)
+    {
         $backtracecode = '';
         $backtracecontainer = '<div class="backtrace">%s</div>';
         $stepheadercode = '<pre class="header"><span class="step">%s</span> <span class="class">%s</span></pre>';
@@ -57,8 +86,7 @@ class ExceptionHandler {
                 //} else {
                     $class .= '(';
                     $arguments = '';
-                    //Übergebende Argumente ausgeben
-                    foreach ($step['args'] as $argument) {
+                    foreach ((array)$step['args'] as $argument) {
                         $arguments .= ((strlen($arguments)) === 0) ? '' : ', ';
                         if (is_object($argument)) {
                             $arguments .= get_class($argument);

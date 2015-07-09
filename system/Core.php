@@ -3,6 +3,7 @@
 namespace Quantum;
 
 use Quantum\DBO\Account;
+use Quantum\Exceptions\NotFoundException;
 use Quantum\pages\IPage;
 
 class Core {
@@ -38,6 +39,11 @@ class Core {
     private $userManager;
 
     /**
+     * @var ExceptionHandler
+     */
+    protected $exceptionHandler;
+
+    /**
      * @var Core
      */
     private static $instance;
@@ -54,6 +60,7 @@ class Core {
         $this->initTranslator();
         $this->initUserManager();
         $this->initPlugins();
+        $this->initApp();
 
         Core::$instance = $this;
     }
@@ -93,7 +100,7 @@ class Core {
         $pageObject = new $pageFullName();
 
         if(!($pageObject instanceof BasePage)) {
-            $this->throwNotFound();
+            throw new NotFoundException;
         }
 
         $this->doAuthorization($pageObject);
@@ -101,7 +108,7 @@ class Core {
         if ($pageObject instanceof ContainerPage) {
             $pageFullName = $pageFullName . '\\' . (isset($path[1]) ? $path[1] : '');
             if (! class_exists($pageFullName)) {
-                $this->throwNotFound();
+                throw new NotFoundException;
             }
 
             $pageObject->preRender($this, $this->smarty);
@@ -244,11 +251,35 @@ class Core {
     }
 
     private function initExceptionHandler() {
-        new ExceptionHandler();
+        $this->exceptionHandler = new ExceptionHandler($this);
+
+        $this->addException('\Quantum\Exceptions\NotFoundException', function (Core $core) {
+            $core->throwNotFound();
+        });
     }
 
     private function initTranslator() {
         $this->translator = new Translator('DE', $this->internalDatabase);
+    }
+
+    /**
+     * Init app
+     */
+    private function initApp()
+    {
+        $core =& $this;
+        require APP_DIR . 'init.php';
+    }
+
+    /**
+     * Push error to be cached
+     *
+     * @param $class
+     * @param callable $closure
+     */
+    public function addException($class, \Closure $closure)
+    {
+        $this->exceptionHandler->pushError($class, $closure);
     }
 
     /**
@@ -418,4 +449,5 @@ class Core {
 
         return $base_url;
     }
+
 }
