@@ -1,5 +1,5 @@
 {
-  "name": "metin2cms/metin2cms",
+  "name": "TeamQuantum/QuantumCMS",
   "description": "todo",
   "minimum-stability": "stable",
   "license": "GPL v3",
@@ -10,6 +10,9 @@
     }, {
       "name": ".PolluX",
       "email": "webmaster@darksecret2.com"
+    }, {
+      "name": "ionut milica",
+      "email": ""
     }
   ],
   "require": {
