@@ -76,22 +76,19 @@ class Core {
         $this->smarty->assign('system_date', date('d-m-Y'));
         $this->smarty->assign('system_time', date('H:i:s'));
 
-        // Serve pages even we don't have apache
-        if ( ! isset($_GET['q'])) {
-            $query = trim($this->getPathInfo(), '/');
-        } else {
-            // Read query param
-            $query = array_key_exists('q', $_GET) ? $_GET['q'] : '';
-        }
+        $query = $this->getPathInfo();
+        $query = str_replace($this->settings['base_path'], '', $query);
+        $query = trim($query, '/');
 
         $path = explode('/', $query);
         $page = 'Home';
 
-        if(strlen($query) > 0) {
+        if(count($path) > 0) {
             $page = $path[0];
         }
 
         $pageFullName = "\\App\\Pages\\" . $page;
+
         if(!class_exists($pageFullName)) {
             $this->smarty->assign('pageTemplate', '404.tpl');
             $this->smarty->display('index.tpl');
@@ -209,6 +206,7 @@ class Core {
      */
     private function initConfiguration() {
         $this->settings = require ROOT_DIR . 'config.php';
+        $this->settings['external_path'] = $this->detectBaseUrl();
     }
 
     private function initDatabases() {
@@ -384,4 +382,17 @@ class Core {
         return $this->settings['in_dev'] == true;
     }
 
+    /**
+     * Autodetect base url
+     *
+     * @return mixed
+     */
+    protected function detectBaseUrl()
+    {
+        $base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
+        $base_url .= '://'. $_SERVER['HTTP_HOST'];
+        $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+
+        return $base_url;
+    }
 }
