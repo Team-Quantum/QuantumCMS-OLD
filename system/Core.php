@@ -76,12 +76,8 @@ class Core {
         $this->smarty->assign('system_date', date('d-m-Y'));
         $this->smarty->assign('system_time', date('H:i:s'));
 
-        $query = $this->getPathInfo();
-        $query = str_replace($this->settings['base_path'], '', $query);
-        $query = trim($query, '/');
-
-        $path = explode('/', $query);
-        $page = 'Home';
+        $path = explode('/', $this->prepareUri());
+        $page = $this->settings['default_page'];
 
         if(count($path) > 0) {
             $page = $path[0];
@@ -90,47 +86,63 @@ class Core {
         $pageFullName = "\\App\\Pages\\" . $page;
 
         if(!class_exists($pageFullName)) {
-            $this->smarty->assign('pageTemplate', '404.tpl');
-            $this->smarty->display('index.tpl');
-            return;
+            $this->throwNotFound();
         }
-        /** @var $pageClass BasePage */
-        $pageClass = new $pageFullName();
-        if(!($pageClass instanceof BasePage)) {
-            throw new \Exception("Page '" . $pageFullName . "' is invalid.'");
+        /** @var $pageObject BasePage */
+        $pageObject = new $pageFullName();
+
+        if(!($pageObject instanceof BasePage)) {
+            $this->throwNotFound();
         }
 
-        $this->doAuthorization($pageClass);
+        $this->doAuthorization($pageObject);
 
-        if ($pageClass instanceof ContainerPage) {
+        if ($pageObject instanceof ContainerPage) {
             $pageFullName = $pageFullName . '\\' . (isset($path[1]) ? $path[1] : '');
             if (! class_exists($pageFullName)) {
-                $this->smarty->assign('pageTemplate', '404.tpl');
-                $this->smarty->display('index.tpl');
-                return;
+                $this->throwNotFound();
             }
 
-            $pageClass->preRender($this, $this->smarty);
+            $pageObject->preRender($this, $this->smarty);
 
             array_shift($path);
-            $pageClass = new $pageFullName;
-            $this->doAuthorization($pageClass);
+            $pageObject = new $pageFullName;
+            $this->doAuthorization($pageObject);
         }
         array_shift($path);
 
-        $pageClass->setSmarty($this->smarty);
-        $pageClass->setCore($this);
-        $pageClass->setArgs($path);
+        $pageObject->setSmarty($this->smarty);
+        $pageObject->setCore($this);
+        $pageObject->setArgs($path);
 
-        $pageClass->preRender($this, $this->smarty);
-        $this->smarty->assign('pageTemplate', $pageClass->getTemplate($this, $this->smarty));
+        $this->renderPage($pageObject);
+    }
 
+    /**
+     * Render page
+     *
+     * @param BasePage $page
+     */
+    protected function renderPage(BasePage $page)
+    {
+        $page->preRender($this, $this->smarty);
+        $this->smarty->assign('pageTemplate', $page->getTemplate($this, $this->smarty));
         // Process sidebars
         PluginManager::processSidebars($this, $this->smarty);
-
         $this->smarty->display('index.tpl');
+        $page->postRender($this, $this->smarty);
+    }
 
-        $pageClass->postRender($this, $this->smarty);
+    /**
+     * Prepare uri for page routing
+     *
+     * @return string
+     */
+    protected function prepareUri()
+    {
+        $query = $this->getPathInfo();
+        $query = str_replace($this->settings['base_path'], '', $query);
+        return trim($query, '/');
     }
 
     /**
@@ -146,6 +158,16 @@ class Core {
                 exit;
             }
         }
+    }
+
+    /**
+     * Throw page not found
+     */
+    public function throwNotFound()
+    {
+        $this->smarty->assign('pageTemplate', '404.tpl');
+        $this->smarty->display('index.tpl');
+        exit;
     }
 
     /**
