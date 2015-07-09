@@ -1,7 +1,7 @@
 <?php
 
 return [
-    # The URL under which the main site is accessible with trailing slash
+    # The PATH under which the main site is accessible with trailing slash
     'base_path' => '/',
 
     # Only for development purposes
@@ -23,16 +23,16 @@ return [
         'account' => [
             'type' => 'mysql',
             'server' => 'localhost',
-            'username' => 'homestead',
-            'password' => 'secret',
+            'username' => 'user',
+            'password' => 'pass',
             'database' => 'account',
             'port' => 3306,
         ],
         'player' => [
             'type' => 'mysql',
             'server' => 'localhost',
-            'username' => 'homestead',
-            'password' => 'secret',
+            'username' => 'user',
+            'password' => 'pass',
             'database' => 'player',
             'port' => 3306,
         ],
