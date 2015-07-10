@@ -85,6 +85,9 @@ class Core {
         $uri = $this->prepareUri();
         $path = explode('/', $uri);
         $page = $this->settings['default_page'];
+        if($page == '') { // If no default page is provided in configuration
+            $page = 'Home';
+        }
 
         if(count($path) > 0 && $uri !== '') {
             $page = $path[0];
@@ -148,7 +151,18 @@ class Core {
     protected function prepareUri()
     {
         $query = $this->getPathInfo();
-        $query = str_replace($this->settings['base_path'], '', $query);
+
+        $basePath = $this->settings['base_path'];
+        // Cut / from begin and end
+        if($basePath[0] == '/') {
+            $basePath = substr($basePath, 1);
+        }
+        if($basePath[strlen($basePath) - 1] == '/') {
+            $basePath = substr($basePath, 0, strlen($basePath) - 1);
+        }
+
+        $query = str_replace($basePath, '', $query);
+
         return trim($query, '/');
     }
 
