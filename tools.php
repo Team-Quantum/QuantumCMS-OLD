@@ -53,7 +53,7 @@ if(!array_key_exists('type', $_GET)) {
             if(!array_key_exists($lang, $handles)) {
                 $handles[$lang] = fopen($dir . $lang . '.ini', 'w+');
             }
-            fwrite($handles[$lang], $translation->getKey() . ' = "' . $translation->getTranslated() . '"' . PHP_EOL);
+            fwrite($handles[$lang], $translation->getTrans() . ' = "' . $translation->getTranslated() . '"' . PHP_EOL);
         }
 
         foreach($handles as $handle) {

@@ -3,12 +3,10 @@ namespace Quantum;
 
 trait Authorization {
 
-    protected $neededPrivileges = false;
-
     /**
      * Authorize current user. If it fails it will redirect him to the homepage
      *
-     * @param $core
+     * @param $core Core
      * @return bool
      */
     public function authorize($core)
