@@ -6,7 +6,7 @@
         </tr>
         <tr>
             <th>Reich:</th>
-            <td><img src="{$system_path}img/empire_{$home_empire}.png" /></td>
+            <td><img src="{$system_path}assets/img/empire_{$home_empire}.png" /></td>
         </tr>
         <tr>
             <th>Charaktere:</th>
