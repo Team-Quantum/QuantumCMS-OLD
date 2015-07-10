@@ -8,7 +8,7 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="key" type="text" />
+        <field name="trans" type="text" />
         <field name="lang" type="string" length="2" />
         <field name="translated" type="text" />
     </entity>

@@ -19,7 +19,7 @@ class PluginManager {
      * @throws \Exception
      */
     public static function load($core) {
-        $dir = SYSTEM_DIR . 'plugins' . DS;
+        $dir = SYSTEM_DIR . 'Plugins' . DS;
         if($handle = opendir($dir)) {
             while(false !== ($entry = readdir($handle))) {
                 if($entry != '.' && $entry != '..' && is_dir($dir.$entry)) {

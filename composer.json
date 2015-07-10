@@ -21,8 +21,11 @@
   },
   "autoload": {
     "psr-4": {
-      "Quantum\\": "system/",
-      "App\\": "app/"
+      "Quantum\\": "System/",
+      "Quantum\\Plugins\\": "System/Plugins/",
+      "Quantum\\CronJobs\\": "System/CronJobs/",
+      "Quantum\\Utils\\": "System/Utils/",
+      "App\\": "App/"
     }
   }
 }

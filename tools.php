@@ -27,7 +27,7 @@ if(!array_key_exists('type', $_GET)) {
                     $keys = parse_ini_file($dir . $entry);
                     foreach($keys as $key => $translated) {
                         $translation = $translationsRepo->findOneBy(
-                            array("key" => $key, "lang" => $lang)
+                            array("trans" => $key, "lang" => $lang)
                         );
                         if($translation == null) {
                             $translation = new \Quantum\DBO\Translation($key, $lang, $translated);

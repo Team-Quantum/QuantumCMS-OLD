@@ -12,7 +12,7 @@ class Translation {
     /**
      * @var string
      */
-    protected $key;
+    protected $trans;
 
     /**
      * @var string
@@ -26,13 +26,13 @@ class Translation {
 
     /**
      * Translation constructor.
-     * @param string $key
+     * @param string $trans
      * @param string $lang
      * @param string $translated
      */
-    public function __construct($key, $lang, $translated)
+    public function __construct($trans, $lang, $translated)
     {
-        $this->key = $key;
+        $this->trans = $trans;
         $this->lang = $lang;
         $this->translated = $translated;
     }
@@ -56,17 +56,17 @@ class Translation {
     /**
      * @return string
      */
-    public function getKey()
+    public function getTrans()
     {
-        return $this->key;
+        return $this->trans;
     }
 
     /**
-     * @param string $key
+     * @param string $trans
      */
-    public function setKey($key)
+    public function setTrans($trans)
     {
-        $this->key = $key;
+        $this->trans = $trans;
     }
 
     /**

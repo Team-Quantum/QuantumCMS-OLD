@@ -34,7 +34,7 @@ class Translator {
     public function translate($key) {
         /** @var $translation Translation */
         $translation = $this->database->getEntityManager()->getRepository('Quantum\\DBO\\Translation')->findOneBy(
-            array("key" => $key, "lang" => $this->lang)
+            array("trans" => $key, "lang" => $this->lang)
         );
         if($translation == null) {
             $translation = new Translation($key, $this->lang, $key);
@@ -51,13 +51,13 @@ class Translator {
      */
     private function fixUmlaut($string) {
         $replaces = array(
-            'ä' => '&auml;',
-            'ö' => '&ouml;',
-            'ü' => '&uuml;',
-            'ß' => '&szlig;',
-            'Ä' => '&Auml;',
-            'Ö' => '&Ouml;',
-            'Ü' => '&Uuml;',
+            'ï¿½' => '&auml;',
+            'ï¿½' => '&ouml;',
+            'ï¿½' => '&uuml;',
+            'ï¿½' => '&szlig;',
+            'ï¿½' => '&Auml;',
+            'ï¿½' => '&Ouml;',
+            'ï¿½' => '&Uuml;',
         );
         foreach($replaces as $search => $replace) {
             $string = str_replace($search, $replace, $string);

@@ -4,7 +4,6 @@ namespace Quantum;
 
 use Quantum\DBO\Account;
 use Quantum\Exceptions\NotFoundException;
-use Quantum\pages\IPage;
 
 class Core {
 
@@ -94,7 +93,7 @@ class Core {
         $pageFullName = "\\App\\Pages\\" . $page;
 
         if(!class_exists($pageFullName)) {
-            $this->throwNotFound();
+            throw new NotFoundException;
         }
         /** @var $pageObject BasePage */
         $pageObject = new $pageFullName();
@@ -210,11 +209,11 @@ class Core {
         }
 
         if (!defined('APP_DIR')) {
-            define('APP_DIR', ROOT_DIR . DS . 'app' . DS);
+            define('APP_DIR', ROOT_DIR . 'App' . DS);
         }
 
         if (!defined('STORAGE_DIR')) {
-            define('STORAGE_DIR', ROOT_DIR . DS . 'storage' . DS);
+            define('STORAGE_DIR', ROOT_DIR . 'Storage' . DS);
         }
     }
 
@@ -224,10 +223,10 @@ class Core {
     private function initSmarty() {
         $this->smarty = new \Smarty();
         $this->smarty->setTemplateDir(APP_DIR.'templates');
-        $this->smarty->setCompileDir(STORAGE_DIR.'templates');
+        $this->smarty->setCompileDir(STORAGE_DIR.'Compiled');
 
         $pluginDirectories = $this->smarty->getPluginsDir();
-        $pluginDirectories[] = SYSTEM_DIR . 'smarty';
+        $pluginDirectories[] = SYSTEM_DIR . 'Smarty';
         $this->smarty->setPluginsDir($pluginDirectories);
     }
 
