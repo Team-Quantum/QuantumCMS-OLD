@@ -16,6 +16,7 @@
         <field name="exp" type="integer" />
         <field name="gold" type="integer" />
         <field name="last_play" type="datetime" />
+        <field name="alignment" type="integer" />
 
     </entity>
 

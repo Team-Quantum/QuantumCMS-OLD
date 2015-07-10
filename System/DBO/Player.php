@@ -51,6 +51,11 @@ class Player {
     protected $last_play;
 
     /**
+     * @var integer
+     */
+    protected $alignment;
+
+    /**
      * @var null|Guild
      */
     protected $guild;
@@ -246,6 +251,48 @@ class Player {
      */
     public function setLastPlay($last_play) {
         $this->last_play = $last_play;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAlignment() {
+        return $this->alignment;
+    }
+
+    /**
+     * @param int $alignment
+     */
+    public function setAlignment($alignment) {
+        $this->alignment = $alignment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAlignmentHTML() {
+        // todo read from settings (stored in database)
+        $alignments = array(
+            'system.align.chivalric' => array('min' => 12000, 'max' => 999999, 'color' => 'cyan'),
+            'system.align.nobel' => array('min' => 8000, 'max' => 11999, 'color' => 'blue'),
+            'system.align.good' => array('min' => 4000, 'max' => 7999, 'color' => 'blue'),
+            'system.align.friendly' => array('min' => 1000, 'max' => 3999, 'color' => 'darkblue'),
+            'system.align.neutral' => array('min' => 0, 'max' => 999, 'color' => 'black'),
+            'system.align.aggressive' => array('min' => -1, 'max' => -3999, 'color' => 'brown'),
+            'system.align.fraudulent' => array('min' => -4000, 'max' => -7999, 'color' => 'darkred'),
+            'system.align.malicious' => array('min' => -8000, 'max' => -11999, 'color' => 'red'),
+            'system.align.cruel' => array('min' => -12000, 'max' => -999999, 'color' => '#f00'),
+        );
+
+        $translator = Core::getInstance()->getTranslator();
+        foreach($alignments as $name => $data) {
+            if($data['min'] < $this->alignment && $data['max'] > $this->alignment) {
+                return '<span style="color: ' . $data['color'] . '; text-shadow: 1px 1px black">' .
+                    $translator->translate($name) . '</span>';
+            }
+        }
+
+        return ':( ' . $this->alignment;
     }
 
     /**
