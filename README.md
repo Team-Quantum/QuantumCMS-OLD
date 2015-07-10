@@ -3,6 +3,8 @@ Quantum-CMS a powerful free and open source cms for Metin2 private servers.
 
 ### Requirements
 - PHP >= 5.4
+- mod_rewrite enabled
+- PHP Module: MySQL and or SQLite3
 
 ### Features
 - Plugin System
