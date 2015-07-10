@@ -1,10 +1,11 @@
 Options -Indexes
 Options +FollowSymLinks
 
-
 RewriteEngine On   
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
 RewriteRule ^(.*)$ index.php/$1 [L,QSA]
-RewriteRule ^(vendor/|templates/|mappings/|system/|cronjob\.php|config\.php|config\.example\.php) - [F,L,NC]
+
+RewriteRule ^(App/|mappings/|storage/|System/|vendor/|cronjob\.php|config\.php|config\.example\.php) - [F,L,NC]
