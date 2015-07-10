@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{$system_path}assets/css/main.css" />
     <link rel="stylesheet" type="text/css" href="{$system_path}assets/css/wiki.css" />
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
 </head>
 <body>
     <div id="wrapper">

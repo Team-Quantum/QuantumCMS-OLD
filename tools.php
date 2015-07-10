@@ -30,7 +30,7 @@ if(!array_key_exists('type', $_GET)) {
                             array("trans" => $key, "lang" => $lang)
                         );
                         if($translation == null) {
-                            $translation = new \Quantum\DBO\Translation($key, $lang, $translated);
+                            $translation = new \Quantum\DBO\Translation($key, $lang, utf8_encode($translated));
                         }
                         $translation->setTranslated($translated);
                         $internal->persist($translation);
