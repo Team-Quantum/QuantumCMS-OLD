@@ -248,6 +248,10 @@ class Core {
      * Loads the configuration file
      */
     private function initConfiguration() {
+        if(!file_exists(ROOT_DIR . 'config.php')) {
+            exit('No config.php found.'); // todo redirect to install
+        }
+
         $this->settings = require ROOT_DIR . 'config.php';
         $this->settings['external_path'] = $this->detectBaseUrl();
     }
