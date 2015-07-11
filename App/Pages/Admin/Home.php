@@ -13,7 +13,7 @@ class Home extends BasePage {
      * @return void
      */
     public function preRender($core, $smarty) {
-        // TODO: Implement preRender() method.
+        $core->setMainTemplate('admin.tpl');
     }
 
     /**

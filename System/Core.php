@@ -43,6 +43,11 @@ class Core {
     protected $exceptionHandler;
 
     /**
+     * @var string
+     */
+    protected $mainTemplate = 'index.tpl';
+
+    /**
      * @var Core
      */
     private static $instance;
@@ -133,7 +138,7 @@ class Core {
             $pageObject->setArgs($path);
 
             if (method_exists($pageObject, $action)) {
-                $layout = 'index.tpl';
+                $layout = $this->mainTemplate;
 
                 $result = $pageObject->$action();
 
@@ -496,6 +501,20 @@ class Core {
         $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
         return $base_url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMainTemplate() {
+        return $this->mainTemplate;
+    }
+
+    /**
+     * @param string $mainTemplate
+     */
+    public function setMainTemplate($mainTemplate) {
+        $this->mainTemplate = $mainTemplate;
     }
 
 }
