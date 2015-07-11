@@ -286,7 +286,7 @@ class Player {
 
         $translator = Core::getInstance()->getTranslator();
         foreach($alignments as $name => $data) {
-            if($data['min'] < $this->alignment && $data['max'] > $this->alignment) {
+            if($data['min'] <= $this->alignment && $data['max'] > $this->alignment) {
                 return '<span style="color: ' . $data['color'] . '; text-shadow: 1px 1px black">' .
                     $translator->translate($name) . '</span>';
             }

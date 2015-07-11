@@ -11,6 +11,7 @@
         <field name="name" type="string" />
         <field name="master" type="integer" />
         <field name="level" type="integer" />
+        <field name="exp" type="integer" />
         <field name="win" type="integer" />
         <field name="draw" type="integer" />
         <field name="loss" type="integer" />
