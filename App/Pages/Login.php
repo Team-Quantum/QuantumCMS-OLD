@@ -16,7 +16,7 @@ class Login extends BasePage {
     public function preRender($core, $smarty)
     {
         if($_POST['action'] == 'system-login') {
-            if($core->validateCaptcha()) {
+            if(!$core->validateCaptcha()) {
                 $core->addError('system.errors.captcha');
                 return;
             }

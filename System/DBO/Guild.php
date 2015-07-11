@@ -2,6 +2,8 @@
 
 namespace Quantum\DBO;
 
+use Quantum\Core;
+
 class Guild {
 
     /**
@@ -23,6 +25,11 @@ class Guild {
      * @var integer
      */
     protected $level;
+
+    /**
+     * @var integer
+     */
+    protected $exp;
 
     /**
      * @var integer
@@ -111,6 +118,20 @@ class Guild {
     /**
      * @return int
      */
+    public function getExp() {
+        return $this->exp;
+    }
+
+    /**
+     * @param int $exp
+     */
+    public function setExp($exp) {
+        $this->exp = $exp;
+    }
+
+    /**
+     * @return int
+     */
     public function getWin()
     {
         return $this->win;
@@ -122,6 +143,16 @@ class Guild {
     public function setWin($win)
     {
         $this->win = $win;
+    }
+
+    /**
+     * @return double
+     */
+    public function getWinRatio() {
+        if($this->loss == 0) {
+            return $this->win;
+        }
+        return $this->win / $this->loss;
     }
 
     /**
@@ -172,5 +203,32 @@ class Guild {
         $this->ladder_point = $ladder_point;
     }
 
+    /**
+     * @return array
+     */
+    public function getMembers() {
+        $em = Core::getInstance()->getServerDatabase('player')->getEntityManager();
+
+        $guildMembers = $em->getRepository('Quantum\\DBO\\GuildMember')->findBy(array(
+            'guild_id' => $this->id
+        ));
+
+        $ret = array();
+        /** @var $guildMember GuildMember */
+        foreach($guildMembers as $guildMember) {
+            $ret[] = $em->find('Quantum\\DBO\\Player', $guildMember->getPid());
+        }
+
+        return $ret;
+    }
+
+    /**
+     * @return Player
+     */
+    public function getOwner() {
+        $em = Core::getInstance()->getServerDatabase('player')->getEntityManager();
+
+        return $em->find('Quantum\\DBO\\Player', $this->master);
+    }
 
 }
