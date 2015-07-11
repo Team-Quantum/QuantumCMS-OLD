@@ -17,31 +17,34 @@ class Login extends BasePage {
     {
         if($_POST['action'] == 'system-login') {
             if($core->validateCaptcha()) {
-                // Load account
-                $em = $core->getServerDatabase('account')->getEntityManager();
-                /** @var $account Account */
-                $account = $em->getRepository('Quantum\\DBO\\Account')->findOneBy(array('login' => $_POST['username']));
-
-                if($account != null) {
-                    // Check password
-                    $inputHash = $core->createHash($_POST['password'], $account);
-                    if($inputHash == $account->getPassword()) {
-                        $core->setAccount($account);
-
-                        if($core->getUserManager()->getCurrentInternalAccount() == null) {
-                            $this->redirect('MigrateAccount');
-                        } else {
-                            $this->redirect('Home');
-                        }
-                    } else {
-                        $core->addError('system.errors.login.wrongpwd');
-                    }
-                } else {
-                    $core->addError('system.errors.login.wrongpwd');
-                }
-            } else {
                 $core->addError('system.errors.captcha');
+                return;
             }
+
+            // Load account
+            $em = $core->getServerDatabase('account')->getEntityManager();
+            /** @var $account Account */
+            $account = $em->getRepository('Quantum\\DBO\\Account')->findOneBy(array('login' => $_POST['username']));
+
+            if (is_null($account)) {
+                $core->addError('system.errors.login.wrongpwd');
+                return;
+            }
+
+            // Check password
+            $inputHash = $core->createHash($_POST['password'], $account);
+
+            if($inputHash !== $account->getPassword()) {
+                $core->addError('system.errors.login.wrongpwd');
+            }
+
+            $core->setAccount($account);
+
+            if($core->getUserManager()->getCurrentInternalAccount() == null) {
+                $this->redirect('MigrateAccount');
+            }
+
+            $this->redirect('Home');
         }
     }
 
