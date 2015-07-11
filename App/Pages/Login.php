@@ -29,9 +29,9 @@ class Login extends BasePage {
                         $core->setAccount($account);
 
                         if($core->getUserManager()->getCurrentInternalAccount() == null) {
-                            $core->redirect('MigrateAccount');
+                            $this->redirect('MigrateAccount');
                         } else {
-                            $core->redirect('Home');
+                            $this->redirect('Home');
                         }
                     } else {
                         $core->addError('system.errors.login.wrongpwd');

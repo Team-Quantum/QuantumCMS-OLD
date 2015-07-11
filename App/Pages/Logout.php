@@ -14,9 +14,7 @@ class Logout extends BasePage {
      */
     public function preRender($core, $smarty) {
         $core->setAccount(null);
-        $core->redirect('Home');
-
-        exit();
+        $this->redirect('Home');
     }
 
     /**

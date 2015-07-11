@@ -84,10 +84,7 @@ class Core {
 
         $uri = $this->prepareUri();
         $path = explode('/', $uri);
-        $page = $this->settings['default_page'];
-        if($page == '') { // If no default page is provided in configuration
-            $page = 'Home';
-        }
+        $page = $this->settings['default_page'] ?: 'Home';
 
         if(count($path) > 0 && $uri !== '') {
             $page = $path[0];
@@ -175,7 +172,7 @@ class Core {
     {
         if (method_exists($page, 'authorize')) {
             if ( ! $page->authorize($this)) {
-                $this->redirect('/');
+                header('Location: /');
                 exit;
             }
         }
@@ -237,7 +234,7 @@ class Core {
     private function initSmarty() {
         $this->smarty = new \Smarty();
         $this->smarty->setTemplateDir(APP_DIR.'templates');
-        $this->smarty->setCompileDir(STORAGE_DIR.'Compiled');
+        $this->smarty->setCompileDir(STORAGE_DIR.'compiled');
 
         $pluginDirectories = $this->smarty->getPluginsDir();
         $pluginDirectories[] = SYSTEM_DIR . 'Smarty';
@@ -354,10 +351,6 @@ class Core {
         $result = file_get_contents($recaptchURL, false, $context);
         $json = json_decode($result);
         return $json->{'success'} == 1;
-    }
-
-    public function redirect($page) {
-        header('Location: ' . $this->settings['external_path'] . $page);
     }
 
     public function addError($message, array $format = array()) {
