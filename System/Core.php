@@ -104,6 +104,7 @@ class Core {
 
         $this->doAuthorization($pageObject);
 
+        /** Container pages allows us to create sub-pages */
         if ($pageObject instanceof ContainerPage) {
             $pageFullName = $pageFullName . '\\' . (isset($path[1]) ? $path[1] : '');
             if (! class_exists($pageFullName)) {
@@ -116,11 +117,34 @@ class Core {
             $pageObject = new $pageFullName;
             $this->doAuthorization($pageObject);
         }
-        array_shift($path);
 
         $pageObject->setSmarty($this->smarty);
         $pageObject->setCore($this);
         $pageObject->setArgs($path);
+
+        if ($pageObject instanceof Controller) {
+            // The big deal begins
+            $action = isset($path[1]) ? $path[1] : '';
+            if (method_exists($pageObject, $action)) {
+                $layout = 'index.tpl';
+
+                $result = $pageObject->$action();
+
+                if (stripos($result, ':') !== false) {
+                    list($layout, $template) = explode(':', $result);
+                } else {
+                    $template = $result;
+                }
+
+                $this->smarty->assign('pageTemplate', $template);
+                $this->smarty->display($layout);
+            } else {
+                $pageObject->_404();
+            }
+            return;
+        }
+
+        array_shift($path);
 
         $this->renderPage($pageObject);
     }
