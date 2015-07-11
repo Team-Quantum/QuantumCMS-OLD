@@ -52,6 +52,11 @@ class Guild {
     protected $ladder_point;
 
     /**
+     * @var Player
+     */
+    protected $owner;
+
+    /**
      * @return int
      */
     public function getId()
@@ -226,9 +231,12 @@ class Guild {
      * @return Player
      */
     public function getOwner() {
-        $em = Core::getInstance()->getServerDatabase('player')->getEntityManager();
-
-        return $em->find('Quantum\\DBO\\Player', $this->master);
+        if($this->owner == null) {
+            $em = Core::getInstance()->getServerDatabase('player')->getEntityManager();
+            $this->owner = $em->find('Quantum\\DBO\\Player', $this->master);
+        }
+        
+        return $this->owner;
     }
 
 }

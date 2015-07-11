@@ -22,13 +22,19 @@
         </tr>
         <tr>
             <th>Owner:</th>
-            <td>{$guild->getOwner()->getName()}</td>
+            <td>
+                <a href="{$system_path}Character/{$guild->getOwner()->getName()|escape:'url'}">
+                    {$guild->getOwner()->getName()}
+                </a>
+            </td>
         </tr>
         <tr>
             <th style="vertical-align: top">Members:</th>
             <td>
                 {foreach from=$guild->getMembers() item=member}
-                    {$member->getName()}<br />
+                    <a href="{$system_path}Character/{$member->getName()|escape:'url'}">
+                        {$member->getName()}
+                    </a><br />
                 {/foreach}
             </td>
         </tr>
