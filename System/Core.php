@@ -254,14 +254,22 @@ class Core {
     }
 
     private function initDatabases() {
-        $this->internalDatabase = new DatabaseManager($this->settings['internal_database'],
-            ROOT_DIR . 'mappings' . DS . 'internal' . DS);
+        $mappingsPath = ROOT_DIR.'mappings'.DS;
 
-        $this->serverDatabase = array();
-        $this->serverDatabase['account'] = new DatabaseManager($this->settings['server_database']['account'],
-            ROOT_DIR . 'mappings' . DS . 'account' . DS);
-        $this->serverDatabase['player'] = new DatabaseManager($this->settings['server_database']['player'],
-            ROOT_DIR . 'mappings' . DS . 'player' . DS);
+        $internalMappings =  $mappingsPath.'internal'.DS;
+        $accountMappings = $mappingsPath.'account' . DS;
+        $playerMappings = $mappingsPath.'player' . DS;
+
+        $this->internalDatabase = new DatabaseManager($this->settings['internal_database'], $internalMappings);
+
+        $env = $this->inDev() ? 'dev' : 'production';
+
+        $accountDbSettings = $this->settings['server_database'][$env]['account'];
+        $playerDbSettings =  $this->settings['server_database'][$env]['player'];
+
+        $this->serverDatabase = [];
+        $this->serverDatabase['account'] = new DatabaseManager($accountDbSettings, $accountMappings);
+        $this->serverDatabase['player'] = new DatabaseManager($playerDbSettings, $playerMappings);
     }
 
     private function initExceptionHandler() {

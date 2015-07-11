@@ -1,6 +1,7 @@
 /vendor/*
 /.idea/*
 /storage/compiled/*.php
+/storage/db.sqlite
 /*.lock
 /config.php
 /*.iml
