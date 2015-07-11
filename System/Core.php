@@ -118,13 +118,20 @@ class Core {
             $this->doAuthorization($pageObject);
         }
 
+        array_shift($path);
+
         $pageObject->setSmarty($this->smarty);
         $pageObject->setCore($this);
         $pageObject->setArgs($path);
 
         if ($pageObject instanceof Controller) {
             // The big deal begins
+
+            array_shift($path);
+            $pageObject->setArgs($path);
+
             $action = isset($path[1]) ? $path[1] : '';
+
             if (method_exists($pageObject, $action)) {
                 $layout = 'index.tpl';
 
@@ -144,7 +151,6 @@ class Core {
             return;
         }
 
-        array_shift($path);
 
         $this->renderPage($pageObject);
     }
