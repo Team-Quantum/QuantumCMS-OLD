@@ -31,28 +31,50 @@ return [
     # while you install this cms, please don't change this!
     'internal_database' => [
         'type' => 'sqlite',
-        'path' => 'main.sqlite'
+        'path' => 'storage/db.sqlite'
     ],
 
     #Server database info
     'server_database' => [
-        # Account Database Information
-        'account' => [
-            'type' => 'mysql',
-            'server' => 'localhost',
-            'username' => 'user',
-            'password' => 'pass',
-            'database' => 'account',
-            'port' => 3306,
+        # Database information for the server that runs online
+        'production' => [
+            # Account Database Information
+            'account' => [
+                'type' => 'mysql',
+                'server' => 'localhost',
+                'username' => 'user',
+                'password' => 'pass',
+                'database' => 'account',
+                'port' => 3306,
+            ],
+            'player' => [
+                # Player Database Information
+                'type' => 'mysql',
+                'server' => 'localhost',
+                'username' => 'user',
+                'password' => 'pass',
+                'database' => 'player',
+                'port' => 3306,
+            ],
         ],
-        'player' => [
-            # Player Database Information
-            'type' => 'mysql',
-            'server' => 'localhost',
-            'username' => 'user',
-            'password' => 'pass',
-            'database' => 'player',
-            'port' => 3306,
-        ],
+        # Database info for your local machine. Use only in_dev = true
+        'dev' => [
+            'account' => [
+                'type' => 'mysql',
+                'server' => 'localhost',
+                'username' => 'user',
+                'password' => 'pass',
+                'database' => 'account',
+                'port' => 3306,
+            ],
+            'player' => [
+                'type' => 'mysql',
+                'server' => 'localhost',
+                'username' => 'user',
+                'password' => 'pass',
+                'database' => 'player',
+                'port' => 3306,
+            ],
+        ]
     ]
 ];
