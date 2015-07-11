@@ -1,12 +1,12 @@
 {
   "name": "TeamQuantum/QuantumCMS",
-  "description": "todo",
+  "description": "Simple and fast CMS for Metin2 servers",
   "minimum-stability": "stable",
   "license": "GPL v3",
   "authors": [
     {
       "name": "DevChuckNorris",
-      "email": "chuck@metin2dev.org"
+      "email": "admin@metin2dev.org"
     }, {
       "name": ".PolluX",
       "email": "webmaster@darksecret2.com"
