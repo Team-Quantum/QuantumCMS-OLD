@@ -138,7 +138,7 @@ class Core {
             $pageObject->setArgs($path);
 
             if (method_exists($pageObject, $action)) {
-                $layout = $this->mainTemplate;
+                $layout = 'index.tpl';
 
                 $result = $pageObject->$action();
 
@@ -171,7 +171,7 @@ class Core {
         $this->smarty->assign('pageTemplate', $page->getTemplate($this, $this->smarty));
         // Process sidebars
         PluginManager::processSidebars($this, $this->smarty);
-        $this->smarty->display('index.tpl');
+        $this->smarty->display($this->mainTemplate);
         $page->postRender($this, $this->smarty);
     }
 
