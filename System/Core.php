@@ -127,7 +127,7 @@ class Core {
         if ($pageObject instanceof Controller) {
             // The big deal begins
 
-            $action = isset($path[1]) ? $path[1] : '';
+            $action = isset($path[0]) ? $path[0] : '';
 
             array_shift($path);
             $pageObject->setArgs($path);
