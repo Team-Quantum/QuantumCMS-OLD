@@ -78,7 +78,7 @@ if(!array_key_exists('type', $_GET)) {
 
             $tmp->setName($privilege->{'Name'});
             $tmp->setCategory($privilege->{'Category'});
-            $tmp->setDesc($privilege->{'Description'});
+            $tmp->setDescription($privilege->{'Description'});
 
             $em->persist($tmp);
         }

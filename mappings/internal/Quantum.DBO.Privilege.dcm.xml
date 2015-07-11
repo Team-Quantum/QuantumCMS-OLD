@@ -10,7 +10,7 @@
 
         <field name="name" type="string" length="100" />
         <field name="technicalName" type="string" length="100" nullable="true" />
-        <field name="desc" type="string" length="100" nullable="true" />
+        <field name="description" type="string" length="100" nullable="true" />
         <field name="category" type="string" length="100" nullable="true" />
     </entity>
 

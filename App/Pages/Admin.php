@@ -3,9 +3,16 @@ namespace App\Pages;
 
 use Quantum\Authorization;
 use Quantum\ContainerPage;
+use Quantum\Controller;
 
-class Admin extends ContainerPage {
-    use Authorization;
+class Admin extends Controller {
 
-    protected $neededPrivileges = 'system_admin';
+    /**
+     * Home page
+     * @return string
+     */
+    public function home() {
+        return 'admin.tpl:pages/admin/home.tpl';
+    }
+
 }

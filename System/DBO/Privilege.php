@@ -22,7 +22,7 @@ class Privilege {
     /**
      * @var string
      */
-    private $desc;
+    private $description;
 
     /**
      * @var string
@@ -74,15 +74,15 @@ class Privilege {
     /**
      * @return string
      */
-    public function getDesc() {
-        return $this->desc;
+    public function getDescription() {
+        return $this->description;
     }
 
     /**
-     * @param string $desc
+     * @param string $description
      */
-    public function setDesc($desc) {
-        $this->desc = $desc;
+    public function setDescription($description) {
+        $this->description = $description;
     }
 
     /**
