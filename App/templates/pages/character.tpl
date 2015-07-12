@@ -3,7 +3,7 @@
         <tr>
             <th>Name:</th>
             <td>{$character_player->getName()}</td>
-            <td rowspan="6">
+            <td rowspan="7">
                 <img src="{$system_path}assets/img/jobs/{$character_player->getJob()}.png" />
             </td>
         </tr>

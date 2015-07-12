@@ -1,0 +1,8 @@
+{
+  "installer": "1.0",
+  "steps": [
+    {
+      "name": "Configure Internal Database"
+    }
+  ]
+}
