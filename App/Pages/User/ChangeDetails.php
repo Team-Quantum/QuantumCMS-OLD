@@ -42,7 +42,6 @@ class ChangeDetails extends BasePage{
          * Change Mail
          */
         elseif(isset($_POST['action']) && $_POST['action'] == 'user-change-mail') {
-            // TODO: Check given mail (old mail == db mail)
             $em = $core->getServerDatabase('account')->getEntityManager();
 
             if($core->getAccount()->getEmail() == $_POST['old_mail']) {
@@ -52,7 +51,7 @@ class ChangeDetails extends BasePage{
                     $newMail = $_POST['new_mail'];
 
                     $account = $core->getAccount();
-                    $account->setPassword($newMail);
+                    $account->setEmail($newMail);
                     $em->persist($account);
                     $em->flush();
 
@@ -69,19 +68,25 @@ class ChangeDetails extends BasePage{
         elseif(isset($_POST['action']) && $_POST['action'] == 'user-change-name') {
 
             $em = $core->getInternalDatabase()->getEntityManager();
-            $tmp = $em->getRepository('\\Quantum\\DBO\\InternalAccount')->findOneBy(array(
-                'displayName' => $_POST['new_name']
-            ));
 
-            if($tmp == null) {
-                // Update internal data
-                $internalAccount = $core->getUserManager()->getCurrentInternalAccount();
-                $internalAccount->setDisplayName($_POST['new_name']);
+            if($core->getUserManager()->getCurrentInternalAccount()->getDisplayName() == $_POST['old_name']) {
 
-                $em->persist($internalAccount);
-                $em->flush();
+                $tmp = $em->getRepository('\\Quantum\\DBO\\InternalAccount')->findOneBy(array(
+                    'displayName' => $_POST['new_name']
+                ));
+                // TODO: übersetzungen für "wenn eingabe ungleich alter wert"
+                if ($tmp == null) {
+                    // Update internal data
+                    $internalAccount = $core->getUserManager()->getCurrentInternalAccount();
+                    $internalAccount->setDisplayName($_POST['new_name']);
 
-                $core->addSuccess('system.change.details.name.success');
+                    $em->persist($internalAccount);
+                    $em->flush();
+
+                    $core->addSuccess('system.change.details.name.success');
+                } else {
+                    $core->addError('system.change.details.name.fail');
+                }
             } else {
                 $core->addError('system.change.details.name.fail');
             }

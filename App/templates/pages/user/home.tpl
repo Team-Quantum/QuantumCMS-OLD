@@ -24,6 +24,10 @@
             <th>E-Mail:</th>
             <td>{$system_currentUser->getEmail()}</td>
         </tr>
+        <tr>
+            <th>Anzeigename:</th>
+            <td>{$system_currentInternalUser->getDisplayName()}</td>
+        </tr>
     </table>
 </div>
 <div style="float: left; padding-left: 20px;">

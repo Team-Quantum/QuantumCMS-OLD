@@ -84,6 +84,7 @@ class Core {
         $this->smarty->assign('system_path', $this->settings['external_path']);
         $this->smarty->assign('system_currentUser', $this->getAccount());
         $this->smarty->assign('system_userManager', $this->getUserManager());
+        $this->smarty->assign('system_currentInternalUser', $this->getUserManager()->getCurrentInternalAccount());
         $this->smarty->assign('system_date', date('d-m-Y'));
         $this->smarty->assign('system_time', date('H:i:s'));
 
