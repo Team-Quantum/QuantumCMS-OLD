@@ -61,7 +61,7 @@ abstract class BasePage {
      *
      * @param $url
      */
-    protected function redirect($url)
+    public function redirect($url)
     {
         header(sprintf('Location: %s', $url));
         exit;
@@ -72,7 +72,7 @@ abstract class BasePage {
      *
      * @param $page
      */
-    protected function redirectTo($page)
+    public function redirectTo($page)
     {
         header('Location: ' . $this->core->getSettings()['external_path'] . $page);
         exit;

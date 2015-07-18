@@ -107,6 +107,10 @@ class Core {
             throw new NotFoundException;
         }
 
+        $pageObject->setSmarty($this->smarty);
+        $pageObject->setCore($this);
+        $pageObject->setArgs($path);
+
         $this->doAuthorization($pageObject);
 
         /** Container pages allows us to create sub-pages */
@@ -207,7 +211,7 @@ class Core {
     {
         if (method_exists($page, 'authorize')) {
             if ( ! $page->authorize($this)) {
-                header('Location: /');
+                $page->redirectTo('');
                 exit;
             }
         }

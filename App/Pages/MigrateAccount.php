@@ -43,7 +43,7 @@ class MigrateAccount extends BasePage {
                             $em->flush();
 
                             $core->getUserManager()->loadInternalAccount();
-                            $this->redirect('Home');
+                            $this->redirectTo('Home');
                         } else {
                             $core->addError('system.register.display_name_check');
                         }
