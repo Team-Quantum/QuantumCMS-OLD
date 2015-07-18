@@ -20,6 +20,10 @@
             <th>L&ouml;schcode:</th>
             <td>{$system_currentUser->getSocialId()}</td>
         </tr>
+        <tr>
+            <th>E-Mail:</th>
+            <td>{$system_currentUser->getEmail()}</td>
+        </tr>
     </table>
 </div>
 <div style="float: left; padding-left: 20px;">

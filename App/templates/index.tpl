@@ -17,7 +17,7 @@
                 </a>
             </div>
             <div id="download_button">
-                <a href="{$system_path}Downloads" class="download">DOWNLOADS<br><span class="download_dec">go to our Download page</span></a>
+                <a href="{$system_path}Downloads" class="download">{lang}system.button.download{/lang}<br><span class="download_dec">{lang}system.button.download.text{/lang}</span></a>
             </div>
         </div>
         <div id="left">

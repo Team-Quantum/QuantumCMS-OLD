@@ -400,18 +400,30 @@ class Core {
         return $json->{'success'} == 1;
     }
 
-    public function addError($message, array $format = array()) {
-        $errors = $this->smarty->getTemplateVars('errors');
-        if($errors === null) {
-            $errors = array();
+    private function addMessage($type, $message, array $format = array()) {
+        $messages = $this->smarty->getTemplateVars($type);
+        if($messages === null) {
+            $messages = array();
         }
         $message = $this->translator->translate($message);
         foreach($format as $key => $value) {
             $message = str_replace('%'.$key.'%', $value, $message);
         }
 
-        $errors[] = $message;
-        $this->smarty->assign('errors', $errors);
+        $messages[] = $message;
+        $this->smarty->assign($type, $messages);
+    }
+
+    public function addError($message, array $format = array()) {
+        $this->addMessage('errors', $message, $format);
+    }
+
+    public function addInfo($message, array $format = array()) {
+        $this->addMessage('info', $message, $format);
+    }
+
+    public function addSuccess($message, array $format = array()) {
+        $this->addMessage('success', $message, $format);
     }
 
     /**
