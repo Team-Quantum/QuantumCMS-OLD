@@ -4,5 +4,126 @@
     {
       "name": "Configure Internal Database"
     }
+  ],
+  "configuration": [
+    [ "base_path", {
+      "type": "text",
+      "name": "Base Path",
+      "description": "The PATH under which the main site is accessible after domain with trailing slash",
+      "default": "/"
+    } ],
+    [ "recaptcha", {
+      "type": "category",
+      "name": "ReCaptcha",
+      "children": [
+        [ "enabled", {
+          "type": "checkbox",
+          "name": "Use ReCaptcha",
+          "default": true,
+          "description": ""
+        } ],
+        [ "public", {
+          "type": "text",
+          "name": "Public Key",
+          "description": "The ReCaptcha public key (can be obtained at Google)"
+        } ],
+        [ "private", {
+          "type": "text",
+          "name": "Private Key",
+          "description": "The ReCaptcha private key (can be obtained at Google)"
+        } ]
+      ]
+    } ],
+    [ "internal_database", {
+      "type": "category",
+      "name": "Internal Database",
+      "children": [
+        [ "", {
+          "type": "category",
+          "name": "SQLite",
+          "children": [
+            [ "type", {
+              "type": "checkbox",
+              "name": "Use SQLite",
+              "default": true,
+              "true_value": "sqlite",
+              "description": "Use SQLite for internal database"
+            } ],
+            [ "path", {
+              "type": "text",
+              "name": "Storage Path",
+              "default": "storage/db.sqlite"
+            } ]
+          ]
+        } ],
+        [ "", {
+          "type": "category",
+          "name": "MySQL",
+          "children": [
+            [ "type", {
+              "type": "checkbox",
+              "name": "Use MySQL",
+              "default": false,
+              "true_value": "mysql",
+              "description": "Use MySQL for internal database"
+            } ],
+            [ "server", {
+              "type": "text",
+              "name": "Server"
+            } ],
+            [ "port", {
+              "type": "text",
+              "name": "Port"
+            } ],
+            [ "username", {
+              "type": "text",
+              "name": "Username"
+            } ],
+            [ "password", {
+              "type": "text",
+              "name": "Password",
+              "password": true
+            } ]
+          ]
+        } ]
+      ]
+    } ],
+    [ "server_database::production", {
+      "type": "category",
+      "name": "Game Database",
+      "children": [
+        [ "type", {
+          "type": "hidden",
+          "value": "mysql"
+        } ],
+        [ "server", {
+          "type": "text",
+          "name": "Server",
+          "default": "localhost"
+        } ],
+        [ "port", {
+          "type": "text",
+          "name": "Port",
+          "default": "3306"
+        } ],
+        [ "username", {
+          "type": "text",
+          "name": "Username",
+          "default": "root"
+        } ],
+        [ "password", {
+          "type": "text",
+          "name": "Password",
+          "default": "",
+          "password": true
+        } ]
+      ]
+    } ]
+  ],
+  "removeAfterInstall": [
+    "install.json",
+    "config.example.php",
+    "composer.json",
+    "composer.phar"
   ]
 }

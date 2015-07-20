@@ -115,12 +115,94 @@ function step3() {
                 echo '<input type="hidden" name="step" value="3a" />';
                 echo '<input type="hidden" name="branch" value="' . $branch . '" />';
                 echo '</form>';
+            } else {
+                header('Location: install.php?step=4&branch=' . $branch);
             }
         }
 
     } else {
         echo '<b>Error while downloading repository, please try again later.</b>';
     }
+}
+
+function createFieldText($name, $details) {
+    $default = @$details->{'default'};
+    $isPassword = @$details->{'password'} === true;
+
+    $type = $isPassword ? 'password' : 'text';
+
+    echo '<div class="input-group">';
+    echo '<span class="input-group-addon">' . $details->{'name'} . '</span>';
+    echo '<input class="form-control" type="' . $type . '" name="' . $name . '" value="' . $default . '" />';
+    echo '</div><br />';
+}
+
+function createFieldCheckBox($name, $details) {
+    $default = @$details->{'default'};
+
+    echo '<div class="input-group">';
+    echo '<span class="input-group-addon"><input type="checkbox" name="' . $name . '" ';
+    if($default === true) echo 'checked ';
+    echo '/></span>';
+    echo '<span class="form-control">' . $details->{'name'} . '</span>';
+    echo '</div><br />';
+}
+
+function createFieldHidden($name, $details) {
+    echo '<input type="hidden" name="' . $name . '" value="' . $details->{'value'} . '" />';
+}
+
+function createCategory($name, $details) {
+    echo '<div class="panel panel-default">';
+    echo '<div class="panel-heading">';
+    echo '<h3 class="panel-title">' . $details->{'name'} . '</h3>';
+    echo '</div>';
+    echo '<div class="panel-body">';
+
+    foreach($details->{'children'} as $entry) {
+        $fieldName = $entry[0];
+        $fieldDetails = $entry[1];
+
+        createField($name . '::' . $fieldName, $fieldDetails);
+    }
+
+    echo '</div>';
+    echo '</div>';
+}
+
+function createField($name, $details) {
+    switch($details->{'type'}) {
+        case 'text':
+            createFieldText($name, $details);
+            break;
+        case 'checkbox':
+            createFieldCheckBox($name, $details);
+            break;
+        case 'hidden':
+            createFieldHidden($name, $details);
+            break;
+        case 'category':
+            createCategory($name, $details);
+            break;
+    }
+}
+
+/**
+ * Create configuration dialog from .json file
+ */
+function step4() {
+    $branch = $_GET['branch'];
+    $installDetails = json_decode(file_get_contents('install.json'));
+
+    // Create dialog
+    echo '<form method="get">';
+    foreach($installDetails->configuration as $entry) {
+        $fieldName = $entry[0];
+        $fieldDetails = $entry[1];
+
+        createField($fieldName, $fieldDetails);
+    }
+    echo '</form>';
 }
 
 function build_header() {
@@ -143,7 +225,7 @@ function build_header() {
 
 function build_footer() {
     echo '</div>';
-    echo '<footer style="position: fixed; bottom: 0; width: 100%; height: 60px; background-color: #f5f5f5;">';
+    echo '<footer style="position: fixed; bottom: 0; width: 100%; height: 60px; background-color: #f5f5f5; z-index: 100;">';
     echo '<div class="container">';
     echo '<p style="margin: 20px 0; color: #777;">&copy; ' . date('Y') . ' Team-Quantum</p>';
     echo '</div>';
