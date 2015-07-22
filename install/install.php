@@ -139,10 +139,12 @@ function createFieldText($name, $details) {
 
 function createFieldCheckBox($name, $details) {
     $default = @$details->{'default'};
+    $trueValue = @$details->{'true_value'};
 
     echo '<div class="input-group">';
     echo '<span class="input-group-addon"><input type="checkbox" name="' . $name . '" ';
     if($default === true) echo 'checked ';
+    if($trueValue != '') echo 'value="' . $trueValue . '" ';
     echo '/></span>';
     echo '<span class="form-control">' . $details->{'name'} . '</span>';
     echo '</div><br />';
@@ -195,14 +197,150 @@ function step4() {
     $installDetails = json_decode(file_get_contents('install.json'));
 
     // Create dialog
-    echo '<form method="get">';
+    echo '<form method="post" action="?step=5">';
     foreach($installDetails->configuration as $entry) {
         $fieldName = $entry[0];
         $fieldDetails = $entry[1];
 
         createField($fieldName, $fieldDetails);
     }
+    echo '<input type="hidden" name="branch" value="' . $branch . '" />';
+    echo '<input type="submit" class="btn btn-default" value="Install" />';
     echo '</form>';
+}
+
+function assign(&$array, $keys, $value) {
+    $lastKey = array_pop($keys);
+    $tmp = &$array;
+    foreach($keys as $key) {
+        if(!isset($tmp[$key]) || !is_array($tmp[$key])) {
+            $tmp[$key] = array();
+        }
+        $tmp = &$tmp[$key];
+    }
+    $tmp[$lastKey] = $value;
+    unset($tmp);
+}
+
+function toPHP($name, $value) {
+    if(is_string($value)) {
+        return "'" . $name . "' => '" . $value . "'," . PHP_EOL;
+    }
+    if(is_array($value)) {
+        $ret = "'" . $name . "' => [" . PHP_EOL;
+        foreach($value as $key => $value2) {
+            $ret .= toPHP($key, $value2);
+        }
+        $ret .= '], // <-- ' . $name . PHP_EOL;
+        return $ret;
+    }
+    return "'" . $name . "' => ''" . PHP_EOL;
+}
+
+/**
+ * Create the config.php file
+ */
+function step5() {
+    $branch = $_POST['branch'];
+    $blackList = array('branch');
+
+    $config = '<?php' . PHP_EOL . PHP_EOL . 'return [' . PHP_EOL;
+    $configArray = array();
+
+    foreach($_POST as $key => $value) {
+        if(in_array($key, $blackList)) {
+            continue;
+        }
+
+        $split = array_filter(explode('::', $key));
+        assign($configArray, $split, $value);
+    }
+
+    foreach($configArray as $key => $value) {
+        $config .= toPHP($key, $value);
+    }
+
+    $config .= '];';
+
+    $file = fopen('config.php', 'w+');
+    fwrite($file, $config);
+    fclose($file);
+
+    header('Location: install.php?step=6&branch=' . $branch);
+}
+
+function recurse_copy($source, $destination) {
+    $dir = opendir($source);
+    @mkdir($destination);
+    while(false !== ($file = readdir($dir))) {
+        if($file != '.' && $file != '..') {
+            if(is_dir($source . '/' . $file)) {
+                recurse_copy($source . '/' . $file, $destination . '/' . $file);
+            } else {
+                copy($source . '/' . $file, $destination . '/' . $file);
+            }
+        }
+    }
+    closedir($dir);
+}
+
+function recurse_delete($directory) {
+    $dir = opendir($directory);
+    while(false !== ($file = readdir($dir))) {
+        if($file != '.' && $file != '..') {
+            if(is_dir($directory . '/' . $file)) {
+                recurse_delete($directory . '/' . $file);
+            } else {
+                unlink($directory . '/' . $file);
+            }
+        }
+    }
+    closedir($dir);
+    rmdir($directory);
+}
+
+function runComposer() {
+    $composerPhar = new Phar("composer.phar");
+    $composerPhar->extractTo('./');
+
+    require_once('./vendor/autoload.php');
+
+    $input = new \Symfony\Component\Console\Input\ArrayInput(array('command' => 'update'));
+    $app = new \Composer\Console\Application();
+    $app->run($input);
+}
+
+/**
+ * Unpack the cms and call own installer
+ */
+function step6() {
+    $branch = $_GET['branch'];
+
+    $archive = new ZipArchive();
+    if($archive->open($branch . '.zip') === true) {
+        if($archive->extractTo('./') === false) {
+            echo 'Failed to extract ZIP File. Maybe write permissions missing?';
+        } else {
+            recurse_copy('QuantumCMS-' . $branch, '.');
+            recurse_delete('QuantumCMS-' . $branch);
+
+            runComposer();
+
+            // Delete files which are listed in install.json
+            $installDetails = json_decode(file_get_contents('install.json'));
+            $removeFiles = $installDetails->{'removeAfterInstall'};
+            foreach($removeFiles as $file) {
+                unlink($file);
+            }
+
+            $redirectTo = $installDetails->{'redirectTo'};
+            header('Location: ' . $redirectTo);
+
+            echo 'Done';
+        }
+    } else {
+        echo 'ZIP-File is gone :(';
+    }
 }
 
 function build_header() {
@@ -227,7 +365,7 @@ function build_footer() {
     echo '</div>';
     echo '<footer style="position: fixed; bottom: 0; width: 100%; height: 60px; background-color: #f5f5f5; z-index: 100;">';
     echo '<div class="container">';
-    echo '<p style="margin: 20px 0; color: #777;">&copy; ' . date('Y') . ' Team-Quantum</p>';
+    echo '<p style="margin: 20px 0; color: #777;">&copy; ' . date('Y') . ' Team-Quantum (Install Version: ' . INSTALLER_VERSION . ')</p>';
     echo '</div>';
     echo '</footer>';
     echo '</body>';

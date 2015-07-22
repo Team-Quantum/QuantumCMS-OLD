@@ -124,6 +124,8 @@
     "install.json",
     "config.example.php",
     "composer.json",
-    "composer.phar"
-  ]
+    "composer.phar",
+    "install.php"
+  ],
+  "redirectTo": "FinishInstall"
 }

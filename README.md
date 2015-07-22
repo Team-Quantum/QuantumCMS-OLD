@@ -1,6 +1,10 @@
 # Quantum-CMS
 Quantum-CMS a powerful free and open source cms for Metin2 private servers.
 
+If you want to follow more the developing proccess check our Trello board:
+
+[Trello Board](https://trello.com/b/RBEDQGGS/quantumcms)
+
 ### Requirements
 - PHP >= 5.4
 - mod_rewrite enabled
