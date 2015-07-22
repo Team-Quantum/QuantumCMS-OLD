@@ -36,6 +36,8 @@ class Login extends BasePage {
 
             if($inputHash !== $account->getPassword()) {
                 $core->addError('system.errors.login.wrongpwd');
+
+                return;
             }
 
             $core->setAccount($account);
