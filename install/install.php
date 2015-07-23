@@ -301,9 +301,9 @@ function recurse_delete($directory) {
 
 function runComposer() {
     $composerPhar = new Phar("composer.phar");
-    $composerPhar->extractTo('./');
+    $composerPhar->extractTo('./composer/');
 
-    require_once('./vendor/autoload.php');
+    require_once('./composer/vendor/autoload.php');
 
     $input = new \Symfony\Component\Console\Input\ArrayInput(array('command' => 'update'));
     $app = new \Composer\Console\Application();
@@ -315,6 +315,8 @@ function runComposer() {
  */
 function step6() {
     $branch = $_GET['branch'];
+
+    set_time_limit(0);
 
     $archive = new ZipArchive();
     if($archive->open($branch . '.zip') === true) {
