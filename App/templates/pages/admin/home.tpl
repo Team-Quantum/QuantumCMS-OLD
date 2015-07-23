@@ -1,0 +1,45 @@
+<pre>
+    {$user_info}
+</pre>
+<pre>
+    <table>
+        <thead>
+            <tr>
+                <th>Typ</th><th>Wert</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$server_info item=lel key=hm}
+                <tr><td>{$hm}</td><td>{$lel}</td></tr>
+            {/foreach}
+        </tbody>
+    </table>
+</pre>
+<pre>
+    <table>
+        <thead>
+        <tr>
+            <th>Typ</th><th>Wert</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach from=$session_info item=lel key=hm}
+            <tr><td>{$hm}</td><td>{$lel}</td></tr>
+        {/foreach}
+        </tbody>
+    </table>
+</pre>
+<pre>
+    <table>
+        <thead>
+        <tr>
+            <th>Typ</th><th>Wert</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach from=$cookie_info item=lel key=hm}
+            <tr><td>{$hm}</td><td>{$lel}</td></tr>
+        {/foreach}
+        </tbody>
+    </table>
+</pre>
