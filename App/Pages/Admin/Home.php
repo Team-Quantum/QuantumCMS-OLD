@@ -15,7 +15,8 @@ class Home extends BasePage {
      * @return void
      */
     public function preRender($core, $smarty) {
-        $core->setMainTemplate('admin.tpl');
+        $smarty->assign('system_admin_menu_active', 'Home');
+        $smarty->assign('system_admin_title', 'Home');
     }
 
     /**
@@ -35,6 +36,6 @@ class Home extends BasePage {
      * @return void
      */
     public function postRender($core, $smarty) {
-        // TODO: Implement postRender() method.
+
     }
 }

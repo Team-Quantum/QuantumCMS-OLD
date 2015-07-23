@@ -19,6 +19,9 @@ class Admin extends ContainerPage {
 
         // Assign smarty variables for the menu
         $smarty->assign('system_admin_menu', $menu);
+
+        // Overwrite default index.tpl
+        $core->setMainTemplate('admin.tpl');
     }
 
 }

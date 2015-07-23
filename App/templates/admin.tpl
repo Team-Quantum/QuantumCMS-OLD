@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
                 {foreach from=$system_admin_menu item=title key=page}
-                    <li>
+                    <li{if $page eq $system_admin_menu_active} class="active"{/if}>
                         <a href="{$system_path}Admin/{$page}">{$title}</a>
                     </li>
                 {/foreach}
@@ -32,20 +32,17 @@
     </nav>
     <div id="page-wrapper">
         <div class="container-fluid">
-
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                        Dashboard <small>QuantumCMS</small>
+                        {$system_admin_title} <small>QuantumCMS</small>
                     </h1>
-                    <ol class="breadcrumb">
-                        <li class="active">
-                            Dashboard
-                        </li>
-                    </ol>
                 </div>
             </div>
+
+            <!-- Content -->
+            {include file=$pageTemplate}
         </div>
     </div>
 </div>
