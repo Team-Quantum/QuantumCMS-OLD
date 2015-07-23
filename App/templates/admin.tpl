@@ -22,12 +22,11 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
-                <li class="active">
-                    <a href="{$system_path}Admin/Home">Dashboard</a>
-                </li>
-                <li>
-                    <a href="{$system_path}Admin/Accounts">Accounts</a>
-                </li>
+                {foreach from=$system_admin_menu item=title key=page}
+                    <li>
+                        <a href="{$system_path}Admin/{$page}">{$title}</a>
+                    </li>
+                {/foreach}
             </ul>
         </div>
     </nav>

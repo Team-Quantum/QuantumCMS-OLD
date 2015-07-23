@@ -9,4 +9,16 @@ class Admin extends ContainerPage {
     use Authorization;
 
     private $neededPrivileges = 'system_admin';
+
+    public function preRender($core, $smarty) {
+        // Build menu (key = page, value = display name)
+        $menu = [
+            "Home" => "Dashboard",
+            "Accounts" => "Accounts"
+        ];
+
+        // Assign smarty variables for the menu
+        $smarty->assign('system_admin_menu', $menu);
+    }
+
 }
