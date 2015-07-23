@@ -17,6 +17,8 @@ class ChangeDetails extends BasePage{
     public function preRender($core, $smarty)
     {
 
+        // TODO: lagerpw zurücksetzen & ändern mit emailzeugs
+
         /**
          * Change Password
          */
@@ -24,18 +26,32 @@ class ChangeDetails extends BasePage{
 
             $em = $core->getServerDatabase('account')->getEntityManager();
 
-            if(!empty($_POST['new_pass']) && $_POST['new_pass'] == $_POST['new_pass2']) {
+            /**
+             * hash method isn't finished
+             * TODO: finish hash method
+             */
+            $source = $core->getAccount();
+            if($core->getAccount()->getPassword() == $core->createHash($_POST['old_pass'], $source) && $core->createHash($_POST['new_pass'], $source) != $core->getAccount()->getPassword()){
 
-                $newPass = $core->createHash($_POST['new_pass'], $core->getAccount());
+                if (!empty($_POST['new_pass']) && $_POST['new_pass'] == $_POST['new_pass2']) {
 
-                $account = $core->getAccount();
-                $account->setPassword($newPass);
-                $em->persist($account);
-                $em->flush();
+                    $newPass = $core->createHash($_POST['new_pass'], $core->getAccount());
 
-                $core->addSuccess('system.change.details.pass.success');
-            }else{
+                    $account = $core->getAccount();
+                    $account->setPassword($newPass);
+                    $em->persist($account);
+                    $em->flush();
+
+                    $core->addSuccess('system.change.details.pass.success');
+
+                    $core->timedRefresh(3,$this->core->getSettings()['external_path'].'Login');
+
+                } else {
+                    $core->addError('system.change.details.pass.fail');
+                }
+            } else {
                 $core->addError('system.change.details.pass.fail');
+                // TODO: advanded error message -> alt ungleich neu, altes pw falsch
             }
 
         } /**
@@ -75,6 +91,8 @@ class ChangeDetails extends BasePage{
                     'displayName' => $_POST['new_name']
                 ));
                 // TODO: übersetzungen für "wenn eingabe ungleich alter wert"
+                // TODO: übersetzungen in der template datei fertig machen
+
                 if ($tmp == null) {
                     // Update internal data
                     $internalAccount = $core->getUserManager()->getCurrentInternalAccount();

@@ -5,6 +5,7 @@ namespace Quantum;
 use Quantum\DBO\Account;
 use Quantum\Exceptions\NotFoundException;
 
+
 class Core {
 
     /**
@@ -321,6 +322,7 @@ class Core {
     }
 
     private function initTranslator() {
+        // TODO: read language from config/db
         $this->translator = new Translator('DE', $this->internalDatabase);
     }
 
@@ -438,6 +440,14 @@ class Core {
 
         // Default MySQL5 Hash implementation
         return '*' . strtoupper(sha1(sha1($clean, true)));
+    }
+
+    /**
+     * @param $time int value in seconds
+     * @param $location string page
+     */
+    public function timedRefresh($time, $location){
+        header('Refresh: '.$time.';url='.$location.'');
     }
 
     /**
