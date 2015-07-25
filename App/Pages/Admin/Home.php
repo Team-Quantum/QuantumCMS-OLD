@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Pages\Admin;
-namespace System\Sniffer;
+//namespace System\Sniffer;
 
 use Quantum\BasePage;
 use Quantum\Core;
@@ -32,7 +32,7 @@ class Home extends BasePage {
         // TODO: show user information
         //$smarty->assign('user_info', $this->returnSniffer());
 
-        $obj = new phpSniff; // erzeugt ein Objekt der Klasse My\Full\Classname
+        //$obj = new phpSniff; // erzeugt ein Objekt der Klasse My\Full\Classname
         //NSname\subns\func(); // ruft die Funktion My\Full\NSname\subns\func auf
 
         //$smarty->assign('admin_user_info', require_once('System\'));
