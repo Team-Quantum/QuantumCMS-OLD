@@ -4,6 +4,8 @@
     <title>{$system_pageTitle} - Admin</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="{$system_path}assets/js/tweak.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{$system_path}assets/css/admin.css" />
     <meta charset="utf-8">
