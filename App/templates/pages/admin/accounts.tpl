@@ -1,3 +1,4 @@
+{navigator current=$system_admin_accounts_current max=$system_admin_accounts_max}
 <table class="table table-striped">
     <tr>
         <th>ID</th>
@@ -14,19 +15,4 @@
         </tr>
     {/foreach}
 </table>
-<ul class="pagination" style="float: right">
-    <li>
-        <a href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-        </a>
-    </li>
-    {for $i=$system_admin_accounts_current - 5 to $system_admin_accounts_current + 5}
-        {if $i <= 0 or $i > $system_admin_accounts_max}{continue}{/if}
-        <li{if $i == $system_admin_accounts_current} class="active"{/if}><a href="#">{$i}</a></li>
-    {/for}
-    <li>
-        <a href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-        </a>
-    </li>
-</ul>
+{navigator current=$system_admin_accounts_current max=$system_admin_accounts_max}
