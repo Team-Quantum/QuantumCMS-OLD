@@ -27,9 +27,24 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
                 {foreach from=$system_admin_menu item=title key=page}
-                    <li{if $page eq $system_admin_menu_active} class="active"{/if}>
-                        <a href="{$system_path}Admin/{$page}">{$title}</a>
-                    </li>
+                    {if $title|is_array}
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#sub-{$page}">
+                                {$page} <i class="fa fa-fw fa-caret-down"></i>
+                            </a>
+                            <ul id="sub-{$page}" class="collapse">
+                                {foreach from=$title item=name key=page}
+                                    <li>
+                                        <a href="{$system_path}Admin/{$page}">{$name}</a>
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        </li>
+                    {else}
+                        <li{if $page eq $system_admin_menu_active} class="active"{/if}>
+                            <a href="{$system_path}Admin/{$page}">{$title}</a>
+                        </li>
+                    {/if}
                 {/foreach}
             </ul>
         </div>

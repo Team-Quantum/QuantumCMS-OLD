@@ -17,6 +17,10 @@ class Admin extends ContainerPage {
             "Accounts" => "Accounts",
             "Characters" => "Characters",
             "Guilds" => "Guilds",
+            "Import" => array(
+                "Import/ItemProto" => "Item Proto",
+                "Import/Language" => "Language"
+            )
         ];
 
         // Assign smarty variables for the menu
