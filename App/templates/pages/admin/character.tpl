@@ -37,14 +37,13 @@
     </dl>
     <br />
     <h3>Inventory</h3>
-    <div class="m2-inventory" data-m2-width="5" data-m2-height="9">
-        <div class="m2-item" data-m2-pos="21" data-m2-vnum="18" data-m2-name="Sword+8"></div>
-        <div class="m2-item" data-m2-pos="23"></div>
-    </div>
-
-    <div class="m2-inventory" data-m2-width="5" data-m2-height="9">
-
-    </div>
+    {foreach from=$system_admin_inventories item=inventory key=pageNo}
+        <div class="m2-inventory" data-m2-width="5" data-m2-height="9">
+            {foreach from=$inventory item=item}
+                <div class="m2-item" data-m2-pos="{$item->getPos() - 9*5*$pageNo}" data-m2-vnum="18" data-m2-name="{$item->getVnum()}"></div>
+            {/foreach}
+        </div>
+    {/foreach}
 {else}
     <div class="alert alert-danger" role="alert">{lang}system.admin.character.notFound{/lang}</div>
 {/if}

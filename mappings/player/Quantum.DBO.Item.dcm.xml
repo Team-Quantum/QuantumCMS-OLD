@@ -1,0 +1,40 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Quantum\DBO\Item" table="item">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="owner_id" type="integer" />
+        <field name="window" type="string" />
+        <field name="pos" type="integer" />
+        <field name="count" type="integer" />
+        <field name="vnum" type="integer" />
+        <field name="socket0" type="integer" />
+        <field name="socket1" type="integer" />
+        <field name="socket2" type="integer" />
+        <field name="socket3" type="integer" />
+        <field name="socket4" type="integer" />
+        <field name="socket5" type="integer" />
+        <field name="attrtype0" type="integer" />
+        <field name="attrvalue0" type="integer" />
+        <field name="attrtype1" type="integer" />
+        <field name="attrvalue1" type="integer" />
+        <field name="attrtype2" type="integer" />
+        <field name="attrvalue2" type="integer" />
+        <field name="attrtype3" type="integer" />
+        <field name="attrvalue3" type="integer" />
+        <field name="attrtype4" type="integer" />
+        <field name="attrvalue4" type="integer" />
+        <field name="attrtype5" type="integer" />
+        <field name="attrvalue5" type="integer" />
+        <field name="attrtype6" type="integer" />
+        <field name="attrvalue6" type="integer" />
+
+
+    </entity>
+
+</doctrine-mapping>

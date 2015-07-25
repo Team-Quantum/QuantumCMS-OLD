@@ -4,6 +4,7 @@ namespace App\Pages\Admin;
 
 use Quantum\BasePage;
 use Quantum\Core;
+use Quantum\DBO\Item;
 use Smarty;
 
 class Character extends BasePage {
@@ -33,6 +34,31 @@ class Character extends BasePage {
         $smarty->assign('system_admin_character', $character);
         $smarty->assign('system_admin_title', 'Character - ' . $character->getName());
         $smarty->assign('system_admin_menu_active', 'Characters');
+
+        // Load items of player
+        $items = $em->getRepository('\\Quantum\\DBO\\Item')->findBy(
+            array(
+                'owner_id' => $character->getId(),
+                'window' => 'INVENTORY'
+            )
+        );
+
+        // Split to inventory pages
+        $invWidth = 5;              // Todo: Read from configuration
+        $invHeight = 9;             // Todo: Read from configuration
+        $inventory = array();
+        for($i = 0; $i < 2; $i++) { // Todo: Read from configuration how many inventory pages exists
+            $inventory[$i] = array();
+
+            /** @var $item Item */
+            foreach($items as $item) {
+                if(floor($item->getPos() / $invWidth / $invHeight) == $i) {
+                    $inventory[$i][] = $item;
+                }
+            }
+        }
+
+        $smarty->assign('system_admin_inventories', $inventory);
     }
 
     /**
