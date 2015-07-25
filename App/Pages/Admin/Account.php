@@ -22,13 +22,20 @@ class Account extends BasePage {
 
         $accountName = $this->args[0];
         $em = $core->getServerDatabase('account')->getEntityManager();
+        $em2 = $core->getServerDatabase('player')->getEntityManager();
+
         $account = $em->getRepository('\\Quantum\\DBO\\Account')->findOneBy(array('login' => $accountName));
         if($account == null) {
             $smarty->assign('account_found', false);
             return;
         }
 
+        $characters = $em2->getRepository('\\Quantum\\DBO\\Player')->findBy(array('account_id' => $account->getId()));
+
+        $smarty->assign('system_admin_title', 'Account - ' . $account->getLogin());
+        $smarty->assign('system_admin_menu_active', 'Accounts');
         $smarty->assign('system_admin_account', $account);
+        $smarty->assign('system_admin_characters', $characters);
         $smarty->assign('account_found', true);
     }
 

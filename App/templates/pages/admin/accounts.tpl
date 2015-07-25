@@ -7,7 +7,7 @@
         <th>Status</th>
     </tr>
     {foreach from=$system_admin_accounts item=account}
-        <tr data-href="{$system_path}Admin/Account/{$account->getLogin()}">
+        <tr data-href="{$system_path}Admin/Account/{$account->getLogin()|escape:'url'}">
             <td>{$account->getId()}</td>
             <td>{$account->getLogin()}</td>
             <td>{$account->getEmail()}</td>

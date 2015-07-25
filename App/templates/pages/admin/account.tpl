@@ -21,6 +21,22 @@
         <dt>Status</dt>
         <dd>{$system_admin_account->getStatus()}</dd>
     </dl>
+    <br />
+    <h3>Characters</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Level</th>
+        </tr>
+        {foreach from=$system_admin_characters item=character}
+            <tr data-href="{$system_path}Admin/Character/{$character->getName()|escape:'url'}">
+                <td>{$character->getId()}</td>
+                <td>{$character->getName()}</td>
+                <td>{$character->getLevel()}</td>
+            </tr>
+        {/foreach}
+    </table>
 
 {else}
     <div class="alert alert-danger" role="alert">{lang}system.admin.account.notFound{/lang}</div>

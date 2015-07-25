@@ -61,6 +61,11 @@ class Player {
     protected $guild;
 
     /**
+     * @var null|Account
+     */
+    protected $account;
+
+    /**
      * @return int
      */
     public function getId() {
@@ -89,6 +94,19 @@ class Player {
     }
 
     /**
+     * @return string
+     */
+    public function getAccountName() {
+        $this->loadAccount();
+
+        if($this->account == null) {
+            return '';
+        } else {
+            return $this->account->getLogin();
+        }
+    }
+
+    /**
      * @return int
      */
     public function getName() {
@@ -114,6 +132,13 @@ class Player {
      */
     public function setJob($job) {
         $this->job = $job;
+    }
+
+    /**
+     * @return string
+     */
+    public function getJobDisplay() {
+        return Core::getInstance()->getTranslator()->translate('system.jobs.' . $this->job);
     }
 
     /**
@@ -268,6 +293,22 @@ class Player {
     }
 
     /**
+     * @return int
+     */
+    public function getEmpire() {
+        $this->loadAccount();
+
+        return $this->account->getEmpire();
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmpireDisplay() {
+        return Core::getInstance()->getTranslator()->translate('system.empires.' . $this->getEmpire());
+    }
+
+    /**
      * @return string
      */
     public function getAlignmentHTML() {
@@ -316,6 +357,19 @@ class Player {
                 'id' => $member->getGuildId()
             ));
         }
+    }
+
+    /**
+     * Lazy load the account if not done before
+     */
+    private function loadAccount() {
+        if($this->account != null)
+            return;
+
+        $em = Core::getInstance()->getServerDatabase('account')->getEntityManager();
+        $this->account = $em->getRepository('\\Quantum\\DBO\\Account')->findOneBy(array(
+            'id' => $this->account_id
+        ));
     }
 
 }

@@ -14,7 +14,8 @@ class Admin extends ContainerPage {
         // Build menu (key = page, value = display name)
         $menu = [
             "Home" => "Dashboard",
-            "Accounts" => "Accounts"
+            "Accounts" => "Accounts",
+            "Characters" => "Characters",
         ];
 
         // Assign smarty variables for the menu
