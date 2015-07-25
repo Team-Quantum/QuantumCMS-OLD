@@ -14,10 +14,10 @@
         <dd>{$system_admin_character->getLevel()}</dd>
 
         <dt>EXP</dt>
-        <dd>{$system_admin_character->getExp()}</dd>
+        <dd>{$system_admin_character->getExpFormatted()}</dd>
 
         <dt>Gold</dt>
-        <dd>{$system_admin_character->getGold()}</dd>
+        <dd>{$system_admin_character->getGoldFormatted()}</dd>
 
         <dt>Guild</dt>
         <dd>

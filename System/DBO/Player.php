@@ -251,6 +251,15 @@ class Player {
     }
 
     /**
+     * @return string
+     */
+    public function getExpFormatted() {
+        return number_format($this->exp, 0,
+            Core::getInstance()->getTranslator()->translate('system.number.dec'),
+            Core::getInstance()->getTranslator()->translate('system.number.thousand'));
+    }
+
+    /**
      * @return int
      */
     public function getGold() {
@@ -262,6 +271,15 @@ class Player {
      */
     public function setGold($gold) {
         $this->gold = $gold;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoldFormatted() {
+        return number_format($this->gold, 0,
+            Core::getInstance()->getTranslator()->translate('system.number.dec'),
+            Core::getInstance()->getTranslator()->translate('system.number.thousand'));
     }
 
     /**
