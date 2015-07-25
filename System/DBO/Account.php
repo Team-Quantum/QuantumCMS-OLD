@@ -2,6 +2,8 @@
 
 namespace Quantum\DBO;
 
+use Quantum\Core;
+
 class Account {
 
     /**
@@ -73,6 +75,11 @@ class Account {
      * @var integer
      */
     protected $empire;
+
+    /**
+     * @var \DateTime
+     */
+    protected $last_play;
 
     /**
      * @return int
@@ -175,6 +182,13 @@ class Account {
     /**
      * @return string
      */
+    public function getCreateTimeDisplay() {
+        return $this->create_time->format(Core::getInstance()->getTranslator()->translate('system.datetime.format'));
+    }
+
+    /**
+     * @return string
+     */
     public function getQuestion1() {
         return $this->question1;
     }
@@ -257,7 +271,8 @@ class Account {
     }
 
     public function __construct() {
-       $this->availDt = new \DateTime('0000-00-00 00:00:00');
+        $this->availDt = new \DateTime('0000-00-00 00:00:00');
+        $this->last_play = new \DateTime('0000-00-00 00:00:00');
     }
 
     /**
@@ -272,6 +287,27 @@ class Account {
      */
     public function setEmpire($empire) {
         $this->empire = $empire;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastPlay() {
+        return $this->last_play;
+    }
+
+    /**
+     * @param \DateTime $last_play
+     */
+    public function setLastPlay($last_play) {
+        $this->last_play = $last_play;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastPlayDisplay() {
+        return $this->last_play->format(Core::getInstance()->getTranslator()->translate('system.datetime.format'));
     }
 
 }

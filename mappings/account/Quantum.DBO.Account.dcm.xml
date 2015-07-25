@@ -21,6 +21,7 @@
         <field name="status" type="string" />
         <field name="availDt" type="datetime" nullable="true" />
         <field name="empire" type="integer" />
+        <field name="last_play" type="datetime" />
     </entity>
 
 </doctrine-mapping>
