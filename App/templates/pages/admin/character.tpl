@@ -35,6 +35,16 @@
         <dt>Empire</dt>
         <dd>{$system_admin_character->getEmpireDisplay()}</dd>
     </dl>
+    <br />
+    <h3>Inventory</h3>
+    <div class="m2-inventory" data-m2-width="5" data-m2-height="9">
+        <div class="m2-item" data-m2-pos="21"></div>
+        <div class="m2-item" data-m2-pos="23"></div>
+    </div>
+
+    <div class="m2-inventory" data-m2-width="5" data-m2-height="9">
+
+    </div>
 {else}
     <div class="alert alert-danger" role="alert">{lang}system.admin.character.notFound{/lang}</div>
 {/if}

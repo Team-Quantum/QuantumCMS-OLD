@@ -1,0 +1,14 @@
+.m2-inventory {
+    background: black url("../img/slot.png");
+    border: 1px solid #aaa;
+
+    display: inline-block;
+    position: relative;
+}
+
+.m2-inventory .m2-item {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background-color: red;
+}

@@ -16,6 +16,7 @@ class Admin extends ContainerPage {
             "Home" => "Dashboard",
             "Accounts" => "Accounts",
             "Characters" => "Characters",
+            "Guilds" => "Guilds",
         ];
 
         // Assign smarty variables for the menu
