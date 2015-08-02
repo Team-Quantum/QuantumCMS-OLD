@@ -224,7 +224,7 @@ class Core {
      */
     public function displayNotFound()
     {
-        $this->smarty->assign('pageTemplate', '404.tpl');
+        $this->smarty->assign('pageTemplate', 'pages/error/404.tpl');
         $this->smarty->display('index.tpl');
         exit;
     }
