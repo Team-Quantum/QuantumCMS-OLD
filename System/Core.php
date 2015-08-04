@@ -79,8 +79,8 @@ class Core {
 
         $this->smarty->debugging = $this->settings['in_dev'];
 
-        $this->smarty->assign('system_pageTitle', 'Team Quantum');
-        $this->smarty->assign('system_slogan', 'Quantum CMS <3');
+        $this->smarty->assign('system_pageTitle', $this->getSettings()['info']['pageTitle']);
+        $this->smarty->assign('system_slogan', $this->getSettings()['info']['slogan']);
         $this->smarty->assign('system_year', date('Y'));
         $this->smarty->assign('system_path', $this->settings['external_path']);
         $this->smarty->assign('system_currentUser', $this->getAccount());
@@ -88,6 +88,8 @@ class Core {
         $this->smarty->assign('system_currentInternalUser', $this->getUserManager()->getCurrentInternalAccount());
         $this->smarty->assign('system_date', date('d-m-Y'));
         $this->smarty->assign('system_time', date('H:i:s'));
+        $this->smarty->assign('board_type', $this->getSettings()['news']['type']['version']);
+        $this->smarty->assign('board_link', $this->getSettings()['news']['path']);
 
         $uri = $this->prepareUri();
         $path = explode('/', $uri);

@@ -2,11 +2,13 @@
 
 namespace App\Pages\User;
 
+use Quantum\Authorization;
 use Quantum\BasePage;
 use Quantum\Core;
 use Smarty;
 
 class ChangeDetails extends BasePage{
+    use Authorization;
 
     /**
      * Automatic called before smarty display is called

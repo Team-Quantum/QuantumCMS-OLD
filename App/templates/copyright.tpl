@@ -1,3 +1,8 @@
+{* Copyright Box
+ Please note that's allowed to add your copyright but it's forbidden to remove the copyright
+ of Team-Quantum.
+*}
+
 <div id="footer_copyright">
     Copyright &copy; {$system_year} by {$system_pageTitle}.
     Created with &hearts; by <a href='https://github.com/Team-Quantum'><b>Team Quantum</b></a>.

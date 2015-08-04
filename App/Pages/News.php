@@ -16,11 +16,16 @@ class News extends BasePage{
     public function preRender($core, $smarty)
     {
         // TODO: Load News From Database [Config -> Wbb3, Wbb4, internalDB, ...]
+        $newsWbb3 = NULL;
+        $newsWbb4 = NULL;
+        $newsInternal = NULL;
+        $text = NULL;
 
-        $text = 'Hallo liebe Community,<br/>die [u]w�chentliche Serverwartung[/u] wird morgen fr�h [color=#ff6600]um 3 Uhr[/color] stattfinden.<br/>Ab dann ist der [color=#ff6600]Gameserver f�r ca. 1h nicht erreichbar[/color].<br/><br/>Wir bitten um Verst�ndnis f�r die Unannehmlichkeiten.<br/><br/>[youtube=?v=c0oMwcMSqoY][/youtube]<br/>Liebe Gr��e,<br/>.PolluX';
+
 
         $news = new NewsObject($this->parseBBCode($this->cutString($text)), 'http://www.metin2dev.org', true);
-        $smarty->assign('news_wbb', $news);
+        $smarty->assign('news_text', $news);
+        $smarty->assign('thread_id', '1');
     }
 
     /**
@@ -80,5 +85,45 @@ class News extends BasePage{
             return substr($text, 0, 500);
         }
 
+    }
+
+    private function loadNews($version = 'internal', $msgn = 5){
+
+        // $version = $this->core->getSettings()['news']['version']
+        // $msgn = $this->core->getSettings()['news']['messages']
+
+        $em = $this->core->getServerDatabase('player')->getEntityManager();
+
+        if($version == 'internal'){
+
+            if($this->core->getSettings()['news']['type']['internal'] == 'board'){
+                $news = $em->getRepository('\\Quantum\\DBO\\Internal\\Board')->findBy(array(), array(), $msgn, 0);
+
+
+            }elseif($this->core->getSettings()['news']['type']['internal'] == 'internal'){
+                $news = $em->getRepository('\\Quantum\\DBO\\Internal\\News')->findBy(array(), array(), $msgn, 0);
+
+
+            }else{
+                throw new \InvalidArgumentException;
+            }
+
+        }elseif($version == 'wbb3'){
+            $threadTable = "wbb1_1_thread";
+            $postTable = "wbb1_1_post";
+
+            $news = $em->getRepository('\\Quantum\\DBO\\Wbb3')->findBy(array(), array(), $msgn, 0);
+
+        }elseif($version == 'wbb4'){
+            $threadTable = "wbb1_1_thread";
+            $postTable = "wbb1_1_post";
+
+            $news = $em->getRepository('\\Quantum\\DBO\\Wbb4')->findBy(array(), array(), $msgn, 0);
+
+            $newsObject = $em->getConnection()->query();
+
+        }else{
+            throw new \InvalidArgumentException;
+        }
     }
 }

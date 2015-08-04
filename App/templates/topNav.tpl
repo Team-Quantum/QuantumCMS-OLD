@@ -18,7 +18,13 @@
 <div class="navright">
     <a class="blue" href="{$system_path}">Home</a>
     <a class="blue" href="{$system_path}News">News</a>
-    <a class="blue" href="{$system_path}Board">Board</a>
+
+    {if $board_type == 'internal'}
+        <a class="blue" href="{$system_path}Board">Board</a>
+    {else}
+        <a class="blue" href="{$system_path}{$board_link}">Board</a>
+    {/if}
+
     <a class="blue" href="{$system_path}Wiki">Wiki</a>
     <a class="blue" href="ts3server://5.39.44.183">Teamspeak</a>
 </div>
