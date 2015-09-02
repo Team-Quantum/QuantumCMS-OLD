@@ -117,16 +117,7 @@ class Core {
 
         /** Container pages allows us to create sub-pages */
         if ($pageObject instanceof ContainerPage) {
-            $pageFullName = $pageFullName . '\\' . (isset($path[1]) ? $path[1] : '');
-            if (! class_exists($pageFullName)) {
-                throw new NotFoundException;
-            }
-
-            $pageObject->preRender($this, $this->smarty);
-
-            array_shift($path);
-            $pageObject = new $pageFullName;
-            $this->doAuthorization($pageObject);
+            $pageObject = $this->handleContainerPage($pageObject, $pageFullName, $path);
         }
 
         array_shift($path);
@@ -164,6 +155,33 @@ class Core {
 
 
         $this->renderPage($pageObject);
+    }
+
+    /**
+     * @param $pageObject BasePage
+     * @param $pageFullName String
+     * @param array $path
+     * @return BasePage
+     * @throws NotFoundException
+     */
+    protected function handleContainerPage($pageObject, $pageFullName, array $path) {
+        $pageFullName = $pageFullName . '\\' . (isset($path[1]) ? $path[1] : '');
+        if (! class_exists($pageFullName)) {
+            echo $pageFullName . '<br />';
+            throw new NotFoundException;
+        }
+
+        $pageObject->preRender($this, $this->smarty);
+
+        array_shift($path);
+        $pageObject = new $pageFullName;
+        if ($pageObject instanceof ContainerPage) {
+            return $this->handleContainerPage($pageObject, $pageFullName, $path);
+        } else {
+            $this->doAuthorization($pageObject);
+        }
+
+        return $pageObject;
     }
 
     /**
