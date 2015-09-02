@@ -257,17 +257,29 @@ class Account {
     }
 
     /**
-     * @return date
+     * @return \DateTime
      */
     public function getAvailDt() {
         return $this->availDt;
     }
 
     /**
-     * @param date $availDt
+     * @param \DateTime $availDt
      */
     public function setAvailDt($availDt) {
         $this->availDt = $availDt;
+    }
+
+    /**
+     * @return bool if the account is banned with avail dt
+     */
+    public function isTemporaryBanned() {
+        return new \DateTime() < $this->availDt;
+    }
+
+    public function getAvailDtDisplay() {
+        //system.datetime.format
+        return $this->availDt->format(Core::getInstance()->getTranslator()->translate('system.datetime.format'));
     }
 
     public function __construct() {

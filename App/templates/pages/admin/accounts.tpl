@@ -11,7 +11,19 @@
             <td>{$account->getId()}</td>
             <td>{$account->getLogin()}</td>
             <td>{$account->getEmail()}</td>
-            <td>{$account->getStatus()}</td>
+            <td>
+                {if $account->getStatus() ne 'OK'}
+                    <b style="color: red;">{$account->getStatus()}</b>
+                {else}
+                    {* Let's check us if the user is banned with availDt *}
+                    {if $account->isTemporaryBanned()}
+                        <b style="color: red">Banned until: {$account->getAvailDtDisplay()}</b>
+                    {else}
+                        <b style="color: green;">{$account->getStatus()}</b>
+                    {/if}
+                {/if}
+
+            </td>
         </tr>
     {/foreach}
 </table>
