@@ -13,7 +13,7 @@
             <td>{$guild->getId()}</td>
             <td>{$guild->getName()}</td>
             <td>
-                <a href="{$system_path}Admin/Account/{$guild->getOwner()->getName()|escape:'url'}">
+                <a href="{$system_path}Admin/Character/{$guild->getOwner()->getName()|escape:'url'}">
                     {$guild->getOwner()->getName()}
                 </a>
             </td>

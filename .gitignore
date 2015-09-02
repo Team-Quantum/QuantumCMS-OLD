@@ -8,3 +8,5 @@
 /*.sqlite
 *~
 /install/*.zip
+/assets/img/icons/item/*.png
+/assets/media/images/*.jpg
