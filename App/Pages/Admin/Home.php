@@ -11,12 +11,19 @@ use Smarty;
 class Home extends BasePage {
     use Authorization;
 
-    private function getFakeArray(){ // only for Testing!!! TODO: delete this
-        return array(
-            'Accounts' => 500,
-            'Characters' => 350,
-            'Guilds' => 5
-        );
+    private function readSessions(){
+        $savePath = ini_get( 'session.save_path');
+        $files = scandir($savePath);
+        $tag = 'sess_';
+        $sessions = NULL;
+
+        foreach($files as $file){
+            if(stristr($file, $tag) === TRUE){
+                $sessions[] = $file;
+            }
+        }
+
+        return $sessions;
     }
 
     /**
@@ -32,27 +39,7 @@ class Home extends BasePage {
         // TESTING
         $smarty->assign('overview', $this->getOverview());
         $smarty->assign('accountStats', $this->getAccountStats());
-        $smarty->assign('CharStats', $this->getAccountStats());
-
-        // TODO: show webserver information
-        $smarty->assign('admin_server_info', $this->showServer());
-        // TODO: show session information
-        $smarty->assign('admin_session_info', $this->showSession());
-        // TODO: show cookie information
-        $smarty->assign('admin_cookie_info', $this->showCookie());
-        // TODO: show usage statistics
-
-        // TODO: show user information
-        //$smarty->assign('user_info', $this->returnSniffer());
-
-        //$obj = new phpSniff; // erzeugt ein Objekt der Klasse My\Full\Classname
-        //NSname\subns\func(); // ruft die Funktion My\Full\NSname\subns\func auf
-
-        //$smarty->assign('admin_user_info', require_once('System\'));
-        
-        // TODO: show server statistics
-
-
+        //$smarty->assign('CharStats', $this->getCharStats());
     }
 
     /**
@@ -118,9 +105,6 @@ class Home extends BasePage {
         )));
 
         return compact('Accounts', 'Shinsoo', 'Chunjo', 'Jinno');
-
-        //$em = $this->core->getServerDatabase('player')->getEntityManager();
-
     }
 
     /**
@@ -208,9 +192,9 @@ class Home extends BasePage {
 
         $new = array(
             key($array) => $formatted[0],
-            key($array) => $formatted[1],
-            key($array) => $formatted[2],
-            key($array) => $formatted[3]
+            key(next($array)) => $formatted[1],
+            key(next($array)) => $formatted[2],
+            key(next($array)) => $formatted[3]
         );
 
         return $new;

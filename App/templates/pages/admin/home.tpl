@@ -1,7 +1,6 @@
 <style>
     #marginsides pre{
         margin-left: 15px;
-        /*margin-right: 15px;*/
     }
 </style>
 
@@ -10,12 +9,10 @@
 	<pre>
 		<table class="table table-striped">
             <thead>
-            <tr>
-                <th>Key</th><th>Value</th>
-            </tr>
+            <tr><th>Serverstatistik</th></tr>
             </thead>
             <tbody>
-            {foreach from=$array item=value key=name}
+            {foreach from=$overview item=value key=name}
                 <tr data-href="{$system_path}Admin/{$name}"><td>{$name}</td><td>{$value}</td></tr>
             {/foreach}
             </tbody>
@@ -26,20 +23,18 @@
 	<pre>
 		<table class="table table-striped">
             <thead>
-            <tr>
-                <th>Key</th><th>Value</th>
-            </tr>
+            <tr><th>Accountstatistik</th></tr>
             </thead>
             <tbody>
             {foreach from=$accountStats item=value key=name}
                 {if $name == Jinno}
-                    <tr class="info"><td>{$name}</td><td>{$value->format()}</td></tr>
+                    <tr class="info"><td>{$name}</td><td>{$value}</td></tr>
                 {elseif $name == Shinsoo}
-                    <tr class="danger"><td>{$name}</td><td>{$value->format()}</td></tr>
+                    <tr class="danger"><td>{$name}</td><td>{$value}</td></tr>
                 {elseif $name == Chunjo}
-                    <tr><td>{$name}</td><td>{$value->format()}</td></tr>
+                    <tr><td>{$name}</td><td>{$value}</td></tr>
                 {else}
-                    <tr class="success"><td>{$name}</td><td>{$value->format()}</td></tr>
+                    <tr class="success"><td>{$name}</td><td>{$value}</td></tr>
                 {/if}
             {/foreach}
             </tbody>
@@ -47,48 +42,19 @@
 	</pre>
 </div>
 <br/>
-{* other information *}
+{* other information
 <div id="marginsides">
     <pre>
         <table class="table">
             <thead>
-                <tr>
-                    <th>Typ</th><th>Wert</th>
-                </tr>
+            <tr><th>Webspace Info</th></tr>
             </thead>
             <tbody>
-                {foreach from=$server_info item=lel key=hm}
-                    <tr><td>{$hm}</td><td>{$lel}</td></tr>
-                {/foreach}
-            </tbody>
-        </table>
-    </pre>
-    <pre>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Typ</th><th>Wert</th>
-            </tr>
-            </thead>
-            <tbody>
-            {foreach from=$session_info item=lel key=hm}
-                <tr><td>{$hm}</td><td>{$lel}</td></tr>
-            {/foreach}
-            </tbody>
-        </table>
-    </pre>
-    <pre>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Typ</th><th>Wert</th>
-            </tr>
-            </thead>
-            <tbody>
-            {foreach from=$cookie_info item=lel key=hm}
+            {foreach from=$admin_server_info item=lel key=hm}
                 <tr><td>{$hm}</td><td>{$lel}</td></tr>
             {/foreach}
             </tbody>
         </table>
     </pre>
 </div>
+*}

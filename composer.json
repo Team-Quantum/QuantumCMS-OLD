@@ -27,7 +27,6 @@
       "Quantum\\Plugins\\": "System/Plugins/",
       "Quantum\\CronJobs\\": "System/CronJobs/",
       "Quantum\\Utils\\": "System/Utils/",
-      "Quantum\\Sniffer\\": "System/Sniffer",
       "App\\": "App/"
     }
   }
