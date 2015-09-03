@@ -164,7 +164,7 @@ class Core {
      * @return BasePage
      * @throws NotFoundException
      */
-    protected function handleContainerPage($pageObject, $pageFullName, array $path) {
+    protected function handleContainerPage($pageObject, $pageFullName, array &$path) {
         $pageFullName = $pageFullName . '\\' . (isset($path[1]) ? $path[1] : '');
         if (! class_exists($pageFullName)) {
             echo $pageFullName . '<br />';
