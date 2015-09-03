@@ -4,9 +4,19 @@
                     http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
     <entity name="Quantum\DBO\Wbb3\Threads" table="wbb1_1_thread">
-        <id name="id" type="integer">
+        <id name="threadID" type="integer">
             <generator strategy="AUTO" />
         </id>
+
+        <field name="boardID" type="integer" />
+        <field name="topic" type="string" length="255" />
+        <field name="firstPostPreview" type="text"/>
+        <field name="time" type="integer" />
+        <field name="userID" type="integer" />
+        <field name="username" type="integer" />
+        <field name="views" type="integer" />
+        <field name="isDeleted" type="integer" />
+        <field name="isDisabled" type="integer" />
     </entity>
 
 </doctrine-mapping>

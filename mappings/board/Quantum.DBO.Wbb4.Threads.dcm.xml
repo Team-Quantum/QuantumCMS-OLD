@@ -3,10 +3,20 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                     http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <entity name="Quantum\DBO\Wbb4\Threads" table="wbb1_1_thread">
-        <id name="id" type="integer">
+    <entity name="Quantum\DBO\Wbb4\Threads" table="wbb1_thread">
+        <id name="threadID" type="integer">
             <generator strategy="AUTO" />
         </id>
+
+        <field name="boardID" type="integer" />
+        <field name="topic" type="string" length="255" />
+        <field name="time" type="integer" />
+        <field name="userID" type="integer" />
+        <field name="username" type="integer" />
+        <field name="views" type="integer" />
+        <field name="isDeleted" type="integer" />
+        <field name="isDisabled" type="integer" />
+        <field name="cumulativeLikes" type="integer" />
     </entity>
 
 </doctrine-mapping>

@@ -23,8 +23,8 @@ class News extends BasePage{
 
 
 
-        $news = new NewsObject($this->parseBBCode($this->cutString($text)), 'http://www.metin2dev.org', true);
-        $smarty->assign('news_text', $news);
+        //$news = new NewsObject($this->parseBBCode($this->cutString($text)), 'http://www.metin2dev.org', true);
+        $smarty->assign('news_text', 'http://www.metin2dev.org');
         $smarty->assign('thread_id', '1');
     }
 
@@ -109,6 +109,8 @@ class News extends BasePage{
             }
 
         }elseif($version == 'wbb3'){
+
+            // TODO: move table names to config
             $threadTable = "wbb1_1_thread";
             $postTable = "wbb1_1_post";
 
