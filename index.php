@@ -6,6 +6,7 @@
 
 error_reporting(E_ALL ^ E_NOTICE);
 
+session_name('QuantumSession');
 session_start();
 
 require_once('vendor/autoload.php');

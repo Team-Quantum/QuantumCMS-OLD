@@ -35,7 +35,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" rel="stylesheet" type="text/css">
 
     <style>
-        #slider1 { width: 350px; height: 195px; list-style: none}
+        #slider1 { width: 630px; height: 200px; list-style: none;}
     </style>
 
     <!-- AnythingSlider initialization -->
@@ -43,11 +43,13 @@
         // DOM Ready
         $(function(){
             $('#slider1').anythingSlider({
-                toggleControls : true,
-                theme          : 'metallic',
-                autoPlay	   : true,
-                autoPlayLocked : false,
-                enableStartStop: true
+                toggleControls      :   true,          // enable the control buttons?
+                theme               :   'metallic',    // see http://css-tricks.github.io/AnythingSlider for more themes
+                autoPlay	        :   true,          // start slider on dom ready?
+                autoPlayLocked      :   false,         // lock the start/stop button?
+                enableStartStop     :   true,          // enable the start/stop button?
+                delay               :   3000,          // time in milliseconds
+                resumeOnVideoEnd    :   true           // If true & the slideshow is active & a supported video is playing, it will pause the autoplay until the video is complete
             });
         });
     </script>
@@ -73,14 +75,14 @@
                 {include file="topNav.tpl"}
             </div>
 
-            {* Slider 'Plugin' *}
-            <div id="box">
+            {* Slider Plugin *}
+           <div id="box">
                 <ul id="slider1">
                     <li><img width="195" height="97" src="{$system_path}assets/media/images/ex06.jpg"></li>
                     <li><iframe width="195" height="97" src="https://www.youtube.com/embed/fYMQO3she9E?modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0" frameborder="0" allowfullscreen></iframe></li>
                     <li><img width="195" height="97" src="{$system_path}assets/media/images/ex03.jpg"></li>
-                </ul>
-            </div>
+                </ul><br/>
+           </div>
 
             <div id="box">
                 {* Page Content *}
