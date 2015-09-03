@@ -34,7 +34,7 @@
                             </a>
                             <ul id="sub-{$page}" class="collapse">
                                 {foreach from=$title item=name key=page}
-                                    <li>
+                                    <li{if $page eq $system_admin_menu_active} class="active"{/if}>
                                         <a href="{$system_path}Admin/{$page}">{$name}</a>
                                     </li>
                                 {/foreach}
