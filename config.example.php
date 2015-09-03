@@ -1,13 +1,19 @@
 <?php
 
 return [
+    # Page Information
+    'info' => [
+        'pageTitle' => 'Team Quantum',
+        'slogan' => 'Quantum CMS <3',
+    ],
+
     # The PATH under which the main site is accessible after domain with trailing slash
     # Example: example.com/homepage --> base_path = /homepage/
     'base_path' => '/',
 
     # Only for development purposes
     # Disables e.g. Captcha for testing purposes
-    'in_dev' => true,
+    'in_dev' => false,
 
     # ReCaptcha Support
     # enabled is a boolean (true/false)
@@ -24,6 +30,18 @@ return [
     'captchalib' => [
         'enabled' => false
         // TODO: Create own Captcha lib
+    ],
+
+    # News System
+    # choose your board and configure the newspage
+    'news' => [
+        'path' => '../../board/',  # path to your board from the news page with trailing slash
+        'type' => [
+            'version' => 'internal', # use: 'wbb3', 'wbb4', 'internal'
+            'internal' => 'board' # leave this empty if you use an external board | use: 'board', 'internal', ''
+        ],
+        'boardid' => '', # the Board from where the news should be loaded
+        'messages' => '5'
     ],
 
     # Site only database (internal)
@@ -54,6 +72,15 @@ return [
                 'username' => 'user',
                 'password' => 'pass',
                 'database' => 'player',
+                'port' => 3306,
+            ],
+            'board' => [
+                # Board Database Information (if you use an external board like wbb3)
+                'type' => 'mysql',
+                'server' => 'localhost',
+                'username' => 'user',
+                'password' => 'pass',
+                'database' => 'wcf',
                 'port' => 3306,
             ],
         ],

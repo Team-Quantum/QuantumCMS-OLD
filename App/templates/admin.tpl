@@ -7,6 +7,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="{$system_path}assets/js/tweak.js"></script>
     <script src="{$system_path}assets/js/m2.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
 
     <link rel="stylesheet" type="text/css" href="{$system_path}assets/css/admin.css" />
     <link rel="stylesheet" type="text/css" href="{$system_path}assets/css/m2.css" />
@@ -23,6 +28,14 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{$system_path}Admin/Home">QuantumCMS</a>
+            <a class="navbar-brand glyphicon glyphicon-font" data-toggle="popover" data-trigger="hover" title="Admin"
+               data-content="Visit the Admin main page with this button." data-placement="bottom" href="{$system_path}Admin/Home"></a>
+            <a class="navbar-brand glyphicon glyphicon-modal-window" data-toggle="popover" data-trigger="hover" title="Home"
+               data-content="Switch to the page." data-placement="bottom" href="{$system_path}"></a>
+            <a class="navbar-brand glyphicon glyphicon-info-sign" data-toggle="popover" data-trigger="hover" title="About"
+               data-content="See the About-Page of QuantumCMS and Team-Quantum!" data-placement="bottom" href="{$system_path}Admin/About"></a>
+            <a class="navbar-brand glyphicon glyphicon-off" data-toggle="popover" data-trigger="hover" title="Logout"
+               data-content="Logout from this page" data-placement="bottom" href="{$system_path}Logout"></a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">

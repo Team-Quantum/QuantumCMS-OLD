@@ -2,6 +2,8 @@
 
 namespace Quantum\DBO;
 
+use Quantum\Core;
+
 class Item {
 
     /**
@@ -496,6 +498,16 @@ class Item {
      */
     public function setAttrvalue6($attrvalue6) {
         $this->attrvalue6 = $attrvalue6;
+    }
+
+    // TODO: fix
+    public function format($value){
+
+        $val = intval($value);
+
+        return number_format($val, 0,
+            Core::getInstance()->getTranslator()->translate('system.number.dec'),
+            Core::getInstance()->getTranslator()->translate('system.number.thousand'));
     }
 
 }

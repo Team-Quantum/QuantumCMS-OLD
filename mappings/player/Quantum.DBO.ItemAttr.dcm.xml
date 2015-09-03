@@ -1,0 +1,30 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Quantum\DBO\Player\ItemAttr" table="item_attr">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="apply" type="enum" />
+
+        <field name="lv1" type="integer" />
+        <field name="lv2" type="integer" />
+        <field name="lv3" type="integer" />
+        <field name="lv4" type="integer" />
+        <field name="lv5" type="integer" />
+
+        <field name="weapon" type="integer" />
+        <field name="body" type="integer" />
+        <field name="wrist" type="integer" />
+        <field name="foots" type="integer" />
+        <field name="neck" type="integer" />
+        <field name="head" type="integer" />
+        <field name="shield" type="integer" />
+        <field name="ear" type="integer" />
+
+    </entity>
+
+</doctrine-mapping>
